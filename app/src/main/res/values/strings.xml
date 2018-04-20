@@ -1,0 +1,33 @@
+<resources>
+
+    <string name="app_name">Editor</string>
+    <string name="action_open">Открыть</string>
+    <string name="action_save">Сохранить</string>
+    <string name="action_clear">Очистить</string>
+    <string name="action_settings">Настройки</string>
+
+    <string name="pref_text_color">Цвет</string>
+    <string name="pref_back_color">Фон</string>
+
+    <string name="pref_color_green">Зелёный</string>
+    <string name="pref_color_red">Красный</string>
+    <string name="pref_color_black">Чёрный</string>
+    <string name="pref_color_white">Белый</string>
+    <string name="pref_color_blue">Синий</string>
+    <string name="pref_color_yellow">Жёлтый</string>
+    <string name="pref_color_gray">Серый</string>
+    <string name="pref_color_magenta">Сиреневый</string>
+    <string name="pref_color_violet">Фиолетовый</string>
+    <string name="pref_color_orange">Оранжевый</string>
+    <string name="pref_color_coral">Корраловый</string>
+    <string name="pref_color_maroon">Бордовый</string>
+    <string name="pref_color_moccasin">Бежевый</string>
+
+    <string name="pref_size">Размер</string>
+
+    <string name="pref_style">Стиль</string>
+    <string name="pref_style_regular">Обычный</string>
+    <string name="pref_style_bold">Полужирный</string>
+    <string name="pref_style_italic">Курсив</string>
+
+</resources>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    
+    <string-array name="text_style">
+        <item>Обычный</item>
+        <item>Полужирный</item>
+        <item>Курсив</item>
+        <item>Полужирный и курсив</item>
+    </string-array>
+
+    <string-array name="text_color">
+        <item>Чёрный</item>
+        <item>Зелёный</item>
+        <item>Белый</item>
+        <item>Красный</item>
+        <item>Жёлтый</item>
+        <item>Серый</item>
+        <item>Синий</item>
+        <item>Сиреневый</item>
+    </string-array>
+
+    <string-array name="back_color">
+        <item>Чёрный</item>
+        <item>Зелёный</item>
+        <item>Белый</item>
+        <item>Красный</item>
+        <item>Жёлтый</item>
+        <item>Серый</item>
+        <item>Голубой</item>
+        <item>Сиреневый</item>
+        <item>Бежевый</item>
+        <item>Бордовый</item>
+        <item>Корраловый</item>
+        <item>Фиолетовый</item>
+        <item>Оранжевый</item>
+    </string-array>
+</resources>
