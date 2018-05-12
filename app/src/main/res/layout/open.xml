@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="500dp"
+        android:id="@android:id/list"
+        android:choiceMode="singleChoice">
+
+    </ListView>
+
+    <Button
+        android:id="@+id/button_open"
+        android:orderInCategory="2"
+        android:layout_width="98dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="Open"
+        style="@style/Widget.AppCompat.Button.Colored">
+    </Button>
+
+    <Button
+        android:id="@+id/button_cancel"
+        android:orderInCategory="1"
+        android:layout_width="98dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center|center_horizontal"
+        android:text="Cancel"
+        style="@style/Widget.AppCompat.Button.Colored">
+    </Button>
+
+</LinearLayout>

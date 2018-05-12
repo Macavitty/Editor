@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="450dp"
+        android:id="@android:id/list"
+        android:choiceMode="singleChoice">
+
+    </ListView>
+
+    <Button
+        android:id="@+id/button_rewrite"
+        android:layout_width="130dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="Rewrite file"
+        style="@style/Widget.AppCompat.Button.Colored">
+    </Button>
+
+    <Button
+        android:id="@+id/button_create"
+        android:layout_width="130dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="Create file"
+        style="@style/Widget.AppCompat.Button.Colored">
+    </Button>
+
+
+    <Button
+        android:id="@+id/button_cancel_in_save"
+        android:layout_width="130dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="Cancel"
+        style="@style/Widget.AppCompat.Button.Colored">
+    </Button>
+
+    <TextView
+        android:id="@+id/user_file_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    </TextView>
+
+</LinearLayout>

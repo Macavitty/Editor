@@ -10,12 +10,11 @@
 
     <string-array name="text_color">
         <item>Чёрный</item>
+        <item>Синий</item>
         <item>Зелёный</item>
+        <item>Серый</item>
         <item>Белый</item>
         <item>Красный</item>
-        <item>Жёлтый</item>
-        <item>Серый</item>
-        <item>Синий</item>
         <item>Сиреневый</item>
     </string-array>
 
@@ -23,15 +22,14 @@
         <item>Чёрный</item>
         <item>Зелёный</item>
         <item>Белый</item>
-        <item>Красный</item>
         <item>Жёлтый</item>
         <item>Серый</item>
-        <item>Голубой</item>
         <item>Сиреневый</item>
         <item>Бежевый</item>
         <item>Бордовый</item>
         <item>Корраловый</item>
         <item>Фиолетовый</item>
         <item>Оранжевый</item>
+        <item>Голубой</item>
     </string-array>
 </resources>
