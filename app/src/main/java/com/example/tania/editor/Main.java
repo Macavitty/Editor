@@ -85,7 +85,7 @@ public class Main extends AppCompatActivity {
                         else changesBufferBack.push(edit.getText().toString());
                     }
                 };
-                handler.postDelayed(runnable, 1000);
+                handler.postDelayed(runnable, 800);
             }
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
@@ -178,7 +178,7 @@ public class Main extends AppCompatActivity {
                     isReady = false;
                     String s = changesBufferBack.pop();
                     edit.setText(s);
-                    edit.setSelection(cursorPosition);
+                 //   edit.setSelection(cursorPosition);
                     isReady = true;
                 }
                 return true;
@@ -187,7 +187,7 @@ public class Main extends AppCompatActivity {
                 if (!changesBufferCancel.empty()){
                     isReady = false;
                     edit.setText(changesBufferCancel.pop());
-                    edit.setSelection(cursorPosition);
+            //        edit.setSelection(cursorPosition);
                     isReady = true;
                 }
                 return true;
