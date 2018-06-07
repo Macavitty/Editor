@@ -1,44 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/save_relative"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/header"
+        android:textColor="@color/colorAccent"
+        android:textSize="18sp"
+        android:gravity="center_vertical" />
 
     <ListView
-        android:layout_width="match_parent"
-        android:layout_height="450dp"
         android:id="@android:id/list"
-        android:choiceMode="singleChoice">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:choiceMode="singleChoice"
+        android:layout_below="@id/header"
+        android:layout_above="@id/layout_bottom_bar"/>
 
-    </ListView>
+    <LinearLayout
+        android:id="@+id/layout_bottom_bar"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/bottom_bar"
+        android:clickable="true"
+        android:focusable="true"
+        android:gravity="center"
+        android:orientation="horizontal"
+        >
 
     <Button
         android:id="@+id/button_rewrite"
-        android:layout_width="130dp"
+        android:layout_width="115dp"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="Rewrite file"
+        android:text="@string/button_rewrite_text"
+        android:layout_marginBottom="2dp"
         style="@style/Widget.AppCompat.Button.Colored">
     </Button>
 
     <Button
         android:id="@+id/button_create"
-        android:layout_width="130dp"
+        android:layout_width="115dp"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="Create file"
+        android:text="@string/button_create_text"
+        android:layout_marginBottom="2dp"
         style="@style/Widget.AppCompat.Button.Colored">
     </Button>
 
 
     <Button
         android:id="@+id/button_cancel_in_save"
-        android:layout_width="130dp"
+        android:layout_width="115dp"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="Cancel"
+        android:text="@string/button_cancel_text"
+        android:layout_marginBottom="2dp"
         style="@style/Widget.AppCompat.Button.Colored">
     </Button>
+
+    </LinearLayout>
+
 
     <TextView
         android:id="@+id/user_file_name"
@@ -46,4 +71,6 @@
         android:layout_height="wrap_content">
     </TextView>
 
-</LinearLayout>
+
+
+</RelativeLayout>

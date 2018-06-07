@@ -6,8 +6,21 @@
     tools:context=".MainActivity">
 
     <item
-        android:id="@+id/action_open"
+        android:id="@+id/add_tab"
         android:orderInCategory="1"
+        app:showAsAction="always"
+        android:title="@string/action_cancel"
+        android:icon="@drawable/baseline_add_black_18dp"/>
+    <item
+        android:id="@+id/del_tab"
+        android:orderInCategory="1"
+        app:showAsAction="always"
+        android:title="@string/action_cancel"
+        android:icon="@drawable/baseline_clear_black_18dp"/>
+
+    <item
+        android:id="@+id/action_open"
+        android:orderInCategory="10"
         android:title="@string/action_open"
         app:showAsAction="always|withText" />
 
@@ -40,6 +53,21 @@
         android:orderInCategory="10"
         app:showAsAction="never"
         android:title="@string/action_clear"/>
+
+    <item
+        android:id="@+id/action_back"
+        android:orderInCategory="10"
+        app:showAsAction="never"
+        android:title="@string/action_back"
+        android:icon="@drawable/baseline_undo_black_18dp"/>
+
+    <item
+        android:id="@+id/action_cancel"
+        android:orderInCategory="10"
+        app:showAsAction="never|withText"
+        android:title="@string/action_cancel"
+        android:icon="@drawable/baseline_redo_black_18dp"/>
+
 
 
 </menu>

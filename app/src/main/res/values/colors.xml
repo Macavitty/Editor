@@ -1,10 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#71b40b</color>
-    <color name="colorPrimaryDark">#510499</color>
-    <color name="colorAccent">#045807</color>
-    <color name="background_material_light">#fcd4f146</color>
-    <color name="colorSelectedText">#0f100e</color>
-    <color name="colorSelectedBackgraund">#fca2ed29</color>
+    <color name="colorPrimaryDark">#2c52e7</color>
+    <color name="colorAccent">#0c3301</color>
+    <color name="background_material_light">#fbfcf8</color>
+    <color name="colorSelectedText">#fbfcf9</color>
+    <color name="colorNotSelectedText">#02250a</color>
+    <color name="colorSelectedBackground">#fcdfdbc5</color>
+    <color name="bottom_bar">#fdf6f780</color>
+    <color name="header">#fdf6f780</color>
+    <color name="numeration">#fb647452</color>
+
+    <color name="myYellow">#fbf5f581</color>
+    <color name="myGrey">#fbc7d2ba</color>
+    <color name="myLilac">#fbfab1e8</color>
+    <color name="myBeige">#fbf9d3b4</color>
+    <color name="myVinous">#fbdf1f06</color>
+    <color name="myCorral">#fb647452</color>
+    <color name="myPurple">#fbe39dfc</color>
+    <color name="myOrange">#fbf9a03b</color>
+    <color name="myBlue">#fbabdaf5</color>
+    <color name="myGreen">#fbc8fa6b</color>
+
+    <color name="toolbar">#dff160</color>
+    <color name="selectedTab">#fbe9fa6b</color>
+    <color name="indicator">#a68e8e</color>
+
+
+    <color name="transperent">#01c8fa6b</color>
+
 
 </resources>

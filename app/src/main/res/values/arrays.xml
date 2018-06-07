@@ -8,6 +8,12 @@
         <item>Полужирный и курсив</item>
     </string-array>
 
+    <string-array name="text_srift">
+        <item>Monospace</item>
+        <item>Serif</item>
+        <item>Default</item>
+    </string-array>
+
     <string-array name="text_color">
         <item>Чёрный</item>
         <item>Синий</item>

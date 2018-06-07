@@ -1,10 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <!-- <CheckBoxPreference
+    <CheckBoxPreference
         android:key="@string/pref_first_litera"
-        android:summary="Делать первую букву предложения прописной"
-        android:title=""/> -->
+        android:summary="Делать первую букву предложения заглавной"
+        android:title=""/>
+
+    <CheckBoxPreference
+        android:key="@string/pref_numeration"
+        android:summary="Нумеровать строки"
+        android:title=""/>
 
     <EditTextPreference
         android:defaultValue="20"
@@ -12,6 +17,13 @@
         android:key="@string/pref_size"
         android:title="Размер шрифта"
         android:inputType="numberDecimal"/>
+
+    <ListPreference
+        android:defaultValue="1"
+        android:title="Шрифт"
+        android:key="@string/pref_srift"
+        android:entries="@array/text_srift"
+        android:entryValues="@array/text_srift" />
 
     <ListPreference
         android:defaultValue="1"

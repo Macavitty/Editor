@@ -11,6 +11,8 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.File;
@@ -22,9 +24,13 @@ import java.util.Stack;
 
 public class Open extends ListActivity{
 
-    private List<String> fileList = new ArrayList<>();
+    private ArrayList<String> tmpFileList = new ArrayList<>();
+    private ArrayList<File> tmpFileListFull = new ArrayList<>();
     Stack<File> filesStack = new Stack<>();
     private String localFileName = "";
+    String tmpDirectory = Environment.getExternalStorageDirectory().getPath();
+    TextView textView;
+    private FileAdapter fileAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -32,8 +38,9 @@ public class Open extends ListActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.open);
 
-        listDirectories(new File(Environment.getExternalStorageDirectory().getPath()));
+        textView = findViewById(R.id.header);
 
+        listDirectories(new File(tmpDirectory));
         Button openButton = findViewById(R.id.button_open);
         Button cancelButton = findViewById(R.id.button_cancel);
 
@@ -60,22 +67,30 @@ public class Open extends ListActivity{
     }
 
     void listDirectories(File f){
-
+        tmpDirectory = f.getPath();
+        textView.setText(tmpDirectory);
         filesStack.push(f);
+        //Toast.makeText(getApplicationContext(), tmpDirectory + "*" , Toast.LENGTH_LONG).show();
         File[] files = f.listFiles();
         Arrays.sort(files, filesComparator);
-        fileList.clear();
+        tmpFileList.clear();
+        tmpFileListFull.clear();
         for (File file : files){
-            fileList.add(file.getPath());
-        }
+           // fileList.add(file.getPath());
+            tmpFileList.add(file.getName());
+            tmpFileListFull.add(file);
 
-        ArrayAdapter<String> directoryList = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, fileList);
-        setListAdapter(directoryList);
+        }
+        fileAdapter = new FileAdapter(tmpFileListFull, this, R.layout.open);
+        ArrayAdapter<String> directoryList = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, tmpFileList);
+        setListAdapter(fileAdapter);
     }
 
     @Override
     protected void onListItemClick(ListView l, View v, int position, long id) {
-        File thisFile = new File(fileList.get(position));
+        fileAdapter.changeHighlighting(position);
+//        File thisFile = new File(  tmpDirectory + "/" + tmpFileList.get(position));
+        File thisFile = tmpFileListFull.get(position);
         if(thisFile.isDirectory()){
             localFileName = "";
             listDirectories(thisFile);
