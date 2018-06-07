@@ -164,6 +164,12 @@ public class Main extends AppCompatActivity {
                 return true;
 
             case R.id.action_new_file:
+                tabContext.remove(currentKey);
+                currentKey = "This file needs a name " + ++maxTabIndex;
+                tabLayout.getTabAt(tabLayout.getSelectedTabPosition()).setText(currentKey);
+                changesBufferBack.clear();
+                changesBufferCancel.clear();
+                buffer = "";
                 edit.setText("");
                 fileName = "";
                 return true;
