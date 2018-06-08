@@ -115,7 +115,7 @@ public class Main extends AppCompatActivity {
             }
         });
 
-        tabLayout.addTab(tabLayout.newTab().setText(fileName.equals("") ? "This file needs a name" : fileName));
+        tabLayout.addTab(tabLayout.newTab().setText(fileName.equals("") ? "This file needs a name" : fileName.substring(fileName.lastIndexOf("/")+1, fileName.contains(".")? fileName.indexOf(".") : fileName.length())));
 
     }
 
@@ -337,7 +337,9 @@ public class Main extends AppCompatActivity {
             }
             inputStream.close();
             edit.setText(builder.toString());
-            tabLayout.getTabAt(tabLayout.getSelectedTabPosition()).setText(fileName.substring(fileName.lastIndexOf("/")+1, fileName.contains(".")? fileName.indexOf(".") : fileName.length()));
+            currentKey = fileName.substring(fileName.lastIndexOf("/")+1, fileName.contains(".")? fileName.indexOf(".") : fileName.length());
+            tabLayout.getTabAt(tabLayout.getSelectedTabPosition()).setText(currentKey);
+            //currentKey += "." + tabLayout.getSelectedTabPosition();
         } catch (Throwable t) { Toast.makeText(getApplicationContext(), getString(R.string.msg_file_not_opened) , Toast.LENGTH_SHORT).show();}
     }
 
