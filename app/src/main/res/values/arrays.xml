@@ -2,40 +2,54 @@
 <resources>
     
     <string-array name="text_style">
-        <item>Обычный</item>
-        <item>Полужирный</item>
-        <item>Курсив</item>
-        <item>Полужирный и курсив</item>
+        <item>@string/pref_style_regular</item>
+        <item>@string/pref_style_bold</item>
+        <item>@string/pref_style_italic</item>
+        <item>@string/pref_style_bold_italic</item>
     </string-array>
 
     <string-array name="text_srift">
+        <item>@string/pref_style_default</item>
         <item>Monospace</item>
         <item>Serif</item>
-        <item>Default</item>
     </string-array>
 
     <string-array name="text_color">
-        <item>Чёрный</item>
-        <item>Синий</item>
-        <item>Зелёный</item>
-        <item>Серый</item>
-        <item>Белый</item>
-        <item>Красный</item>
-        <item>Сиреневый</item>
+        <item>@string/pref_color_white</item>
+        <item>@string/pref_color_yellow</item>
+        <item>@string/pref_color_green</item>
+        <item>@string/pref_color_red</item>
+        <item>@string/pref_color_gray</item>
+        <item>@string/pref_color_blue</item>
+        <item>@string/pref_color_magenta</item>
+        <item>@string/pref_color_black</item>
     </string-array>
 
     <string-array name="back_color">
-        <item>Чёрный</item>
-        <item>Зелёный</item>
-        <item>Белый</item>
-        <item>Жёлтый</item>
-        <item>Серый</item>
-        <item>Сиреневый</item>
-        <item>Бежевый</item>
-        <item>Бордовый</item>
-        <item>Корраловый</item>
-        <item>Фиолетовый</item>
-        <item>Оранжевый</item>
-        <item>Голубой</item>
+        <item>@string/pref_color_moccasin</item>
+        <item>@string/pref_color_white</item>
+        <item>@string/pref_color_maroon</item>
+        <item>@string/pref_color_light_blue</item>
+        <item>@string/pref_color_yellow</item>
+        <item>@string/pref_color_green</item>
+        <item>@string/pref_color_coral</item>
+        <item>@string/pref_color_orange</item>
+        <item>@string/pref_color_gray</item>
+        <item>@string/pref_color_magenta</item>
+        <item>@string/pref_color_violet</item>
+        <item>@string/pref_color_black</item>
     </string-array>
+
+    <string-array name="language">
+        <item>Русский</item>
+        <item>Українська</item>
+        <item>English</item>
+    </string-array>
+
+    <string-array name="extension">
+        <item>.txt</item>
+        <item>.text</item>
+        <item>.tex</item>
+    </string-array>
+
 </resources>

@@ -71,6 +71,5 @@
 
     <string name="dlg_quit_app">Do you really want to quit?</string>
     <string name="dlg_choose_file_name">So, what is the file name?</string>
-    <string name="dlg_save_changes">Do you want to save changes?</string>
 
 </resources>

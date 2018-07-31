@@ -3,7 +3,7 @@
     <color name="colorPrimary">#71b40b</color>
     <color name="colorPrimaryDark">#2c52e7</color>
     <color name="colorAccent">#0c3301</color>
-    <color name="background_material_light">#fbfcf8</color>
+    <color name="background_material_light">#fafafa</color>
     <color name="colorSelectedText">#fbfcf9</color>
     <color name="colorNotSelectedText">#02250a</color>
     <color name="colorSelectedBackground">#fcdfdbc5</color>
@@ -21,13 +21,17 @@
     <color name="myOrange">#fbf9a03b</color>
     <color name="myBlue">#fbabdaf5</color>
     <color name="myGreen">#fbc8fa6b</color>
+    <color name="myWhite">#fbffffff</color>
 
     <color name="toolbar">#dff160</color>
     <color name="selectedTab">#fbe9fa6b</color>
     <color name="indicator">#a68e8e</color>
 
+    <color name="transparent">#01c8fa6b</color>
 
-    <color name="transperent">#01c8fa6b</color>
+    <color name="add_remove_button_inner">#71b40b</color>
+    <color name="add_remove_button_outer">#8771b40b</color>
+    <color name="button_text">#faecffd0</color>
 
 
 </resources>

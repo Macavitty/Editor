@@ -6,24 +6,27 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.Environment;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
-import java.util.List;
 import java.util.Stack;
 
-public class SaveAs extends ListActivity {
+public class SaveAsActivity extends ListActivity {
 
     private ArrayList<String> tmpFileList = new ArrayList<>();
     private ArrayList<File> tmpFileListFull = new ArrayList<>();
@@ -34,8 +37,11 @@ public class SaveAs extends ListActivity {
     private String localFileName = "";
     private String tmpDirectory = Environment.getExternalStorageDirectory().getPath();
     private TextView textView;
-//    ListView listView;
-    FileAdapter fileAdapter;
+    //    ListView listView;
+    private FileAdapter fileAdapter;
+    private String extension = "";
+    private Spinner spinner;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +51,7 @@ public class SaveAs extends ListActivity {
         setContentView(R.layout.save_as);
 
         textView = findViewById(R.id.header);
-       // listView=findViewById(R.id.list);
+
         Button cancelButton = findViewById(R.id.button_cancel_in_save);
         Button createButton = findViewById(R.id.button_create);
         Button rewriteButton = findViewById(R.id.button_rewrite);
@@ -57,8 +63,8 @@ public class SaveAs extends ListActivity {
             @Override
             public void onClick(View v) {
                 localFileName = "";
-                Main.canceled = true;
-                SaveAs.super.onBackPressed();
+                MainActivity.canceled = true;
+                SaveAsActivity.super.onBackPressed();
             }
         });
 
@@ -68,29 +74,34 @@ public class SaveAs extends ListActivity {
                 LayoutInflater l = LayoutInflater.from(thisc);
                 View dialog = l.inflate(R.layout.alert_dialog, null);
 
-                AlertDialog.Builder mDialogBuilder = new AlertDialog.Builder(thisc);
+                AlertDialog.Builder mDialogBuilder = new AlertDialog.Builder(SaveAsActivity.this);
 
                 mDialogBuilder.setView(dialog);
 
-                final EditText userText = dialog.findViewById(R.id.input_text);
+                final EditText userText = dialog.findViewById(R.id.input_for_user_file_name);
+                spinner = dialog.findViewById(R.id.extension_spinner);
+
+                ArrayAdapter<CharSequence> spinnerAdapter = ArrayAdapter.createFromResource(SaveAsActivity.this, R.array.extension, android.R.layout.simple_spinner_item);
+                spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spinner.setAdapter(spinnerAdapter);
 
                 mDialogBuilder
                         .setCancelable(false)
-                        .setPositiveButton("OK",
+                        .setPositiveButton(getText(R.string.ok),
                                 new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog,int id) {
-                                        userFileName.setText(userText.getText().toString().contains(".") ? userText.getText() : userText.getText() + ".txt");
-                                        Main.newFile = userFileName.getText().toString();
-                                        Main.fileName = tmpDirectory + "/" + Main.newFile;
-                                        new File(tmpDirectory, Main.newFile);
-                                        SaveAs.super.onBackPressed();
+                                    public void onClick(DialogInterface dialog, int id) {
+                                        userFileName.setText(userText.getText().toString().equals("") ? getString(R.string.unnamed_file) : userText.getText());
+                                        extension = spinner.getSelectedItem().toString();
+                                        MainActivity.newFile = userFileName.getText().toString() + extension;
+                                        MainActivity.fileName = tmpDirectory + "/" + MainActivity.newFile;
+                                        new File(tmpDirectory, MainActivity.newFile);
+                                        SaveAsActivity.super.onBackPressed();
 
-                                        //Toast.makeText(getApplicationContext(), Main.newFile , Toast.LENGTH_LONG).show();
                                     }
                                 })
-                        .setNegativeButton("Cancel",
+                        .setNegativeButton(getText(R.string.cancel),
                                 new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog,int id) {
+                                    public void onClick(DialogInterface dialog, int id) {
                                         dialog.cancel();
                                     }
                                 });
@@ -99,15 +110,16 @@ public class SaveAs extends ListActivity {
 
                 alertDialog.show();
 
-        }
+            }
         });
         rewriteButton.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (localFileName.equals("")) Toast.makeText(getApplicationContext(),getString(R.string.msg_choose_file) , Toast.LENGTH_LONG).show();
+                if (localFileName.equals(""))
+                    Toast.makeText(getApplicationContext(), getString(R.string.msg_choose_file), Toast.LENGTH_LONG).show();
                 else {
-                    Main.fileName = localFileName;
-                    SaveAs.super.onBackPressed();
+                    MainActivity.fileName = localFileName;
+                    SaveAsActivity.super.onBackPressed();
                 }
             }
         });
@@ -144,7 +156,7 @@ public class SaveAs extends ListActivity {
     }
 
 
-    void listDirectories(File f){
+    void listDirectories(File f) {
         tmpDirectory = f.getAbsolutePath();
         textView.setText(tmpDirectory);
         filesStack.push(f);
@@ -152,7 +164,7 @@ public class SaveAs extends ListActivity {
         Arrays.sort(files, filesComparator);
         tmpFileList.clear();
         tmpFileListFull.clear();
-        for (File file : files){
+        for (File file : files) {
             tmpFileList.add(file.getName());
             tmpFileListFull.add(file);
         }
@@ -183,16 +195,15 @@ public class SaveAs extends ListActivity {
         fileAdapter.changeHighlighting(position);
 //        File thisFile = new File(tmpDirectory + "/" + tmpFileList.get(position));
         File thisFile = tmpFileListFull.get(position); //
-        if(thisFile.isDirectory()){
+        if (thisFile.isDirectory()) {
             localFileName = "";
             listDirectories(thisFile);
-        }
-        else{
+        } else {
             localFileName = thisFile.getAbsolutePath();
         }
     }
 
-    Comparator<? super File> filesComparator = new Comparator<File>(){
+    Comparator<? super File> filesComparator = new Comparator<File>() {
         public int compare(File a, File b) {
             return String.valueOf(a.getName()).compareTo(b.getName());
         }
@@ -203,9 +214,9 @@ public class SaveAs extends ListActivity {
 
         filesStack.pop();
 
-        if(filesStack.empty())
+        if (filesStack.empty())
             super.onBackPressed();
-        else{
+        else {
             dir = filesStack.pop();
             listDirectories(dir);
         }

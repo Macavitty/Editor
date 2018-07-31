@@ -1,0 +1,75 @@
+<resources>
+
+    <string name="dlg_quit_app">Do you really want to quit?</string>
+    <string name="dlg_choose_file_name">So, what is the file name?</string>
+
+    <string name="app_name" translatable="false">TextEditor</string>
+    <string name="action_open">Открыть</string>
+    <string name="action_save">Сохранить</string>
+    <string name="action_save_as">Сохранить как</string>
+    <string name="action_clear">Очистить</string>
+    <string name="action_settings">Настройки</string>
+    <string name="action_previous">Открыть предыдущий файл</string>
+    <string name="action_undo">Undo</string>
+    <string name="action_redo">Redo</string>
+
+
+    <string name="pref_text_color">Цвет</string>
+    <string name="pref_back_color">Фон</string>
+
+    <string name="pref_color_green">Зелёный</string>
+    <string name="pref_color_red">Красный</string>
+    <string name="pref_color_black">Чёрный</string>
+    <string name="pref_color_white">Белый</string>
+    <string name="pref_color_blue">Синий</string>
+    <string name="pref_color_yellow">Жёлтый</string>
+    <string name="pref_color_gray">Серый</string>
+    <string name="pref_color_light_blue">Голубой</string>
+    <string name="pref_color_magenta">Сиреневый</string>
+    <string name="pref_color_violet">Фиолетовый</string>
+    <string name="pref_color_orange">Оранжевый</string>
+    <string name="pref_color_coral">Корраловый</string>
+    <string name="pref_color_maroon">Бордовый</string>
+    <string name="pref_color_moccasin">Бежевый</string>
+
+    <string name="pref_size">Размер шрифта</string>
+    <string name="pref_size_hint">(от 10 до 600)</string>
+
+    <string name="pref_style">Стиль</string>
+    <string name="pref_style_regular">Обычный</string>
+    <string name="pref_style_bold">Полужирный</string>
+    <string name="pref_style_italic">Курсив</string>
+    <string name="pref_style_bold_italic">Полужирный и курсив</string>
+    <string name="italic_low_case">курсив</string>
+
+    <string name="pref_srift">Шрифт</string>
+    <string name="pref_style_monospace">Monospace</string>
+    <string name="pref_style_serif">Serif</string>
+    <string name="pref_style_default">По умолчанию</string>
+
+    <string name="pref_first_litera">Заглавная буква</string>
+    <string name="pref_first_litera_summary">Делать первую букву предложения заглавной</string>
+    <string name="pref_numeration">Нумерация строк</string>
+    <string name="pref_language">Язык</string>
+
+    <string name="msg_file_saved">Всё норм, файл сохранён</string>
+    <string name="msg_file_not_saved">Увы, не получилось</string>
+    <string name="msg_file_not_opened">Хм, что-то пошло не так</string>
+    <string name="msg_choose_file">Выберите файл</string>
+
+    <string name="main_hint"> поехали!</string>
+
+    <string name="button_save_text">Сохранить</string>
+    <string name="button_save_as_text">Сохранить как</string>
+    <string name="button_cancel_text">Отмена</string>
+    <string name="button_open_text">Открыть</string>
+    <string name="button_rewrite_text">Переписать</string>
+    <string name="button_create_text">Создать</string>
+
+    <string name="ok">OK</string>
+    <string name="cancel">Отмена</string>
+
+    <string name="default_file_name">Придумай мне имя</string>
+    <string name="unnamed_file">безымянный</string>
+
+</resources>

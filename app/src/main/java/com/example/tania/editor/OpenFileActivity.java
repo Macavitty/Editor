@@ -1,17 +1,12 @@
 package com.example.tania.editor;
 
-import android.app.AlertDialog;
 import android.app.ListActivity;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.Environment;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,10 +14,9 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
-import java.util.List;
 import java.util.Stack;
 
-public class Open extends ListActivity{
+public class OpenFileActivity extends ListActivity {
 
     private ArrayList<String> tmpFileList = new ArrayList<>();
     private ArrayList<File> tmpFileListFull = new ArrayList<>();
@@ -33,7 +27,7 @@ public class Open extends ListActivity{
     private FileAdapter fileAdapter;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState){
+    protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.open);
@@ -49,34 +43,33 @@ public class Open extends ListActivity{
             @Override
             public void onClick(View v) {
                 localFileName = "";
-                Main.canceled = true;
-                Open.super.onBackPressed();
+                MainActivity.canceled = true;
+                OpenFileActivity.super.onBackPressed();
             }
         });
 
         openButton.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (localFileName.equals("")) Toast.makeText(getApplicationContext(),"Выберите файл." , Toast.LENGTH_LONG).show();
-                else{
-                    Main.fileName = localFileName;
-                    Open.super.onBackPressed(); // may not work
+                if (localFileName.equals(""))
+                    Toast.makeText(getApplicationContext(), getString(R.string.msg_choose_file), Toast.LENGTH_LONG).show();
+                else {
+                    MainActivity.fileName = localFileName;
+                    OpenFileActivity.super.onBackPressed(); // may not work
                 }
             }
         });
     }
 
-    void listDirectories(File f){
+    void listDirectories(File f) {
         tmpDirectory = f.getPath();
         textView.setText(tmpDirectory);
         filesStack.push(f);
-        //Toast.makeText(getApplicationContext(), tmpDirectory + "*" , Toast.LENGTH_LONG).show();
         File[] files = f.listFiles();
         Arrays.sort(files, filesComparator);
         tmpFileList.clear();
         tmpFileListFull.clear();
-        for (File file : files){
-           // fileList.add(file.getPath());
+        for (File file : files) {
             tmpFileList.add(file.getName());
             tmpFileListFull.add(file);
 
@@ -89,18 +82,16 @@ public class Open extends ListActivity{
     @Override
     protected void onListItemClick(ListView l, View v, int position, long id) {
         fileAdapter.changeHighlighting(position);
-//        File thisFile = new File(  tmpDirectory + "/" + tmpFileList.get(position));
         File thisFile = tmpFileListFull.get(position);
-        if(thisFile.isDirectory()){
+        if (thisFile.isDirectory()) {
             localFileName = "";
             listDirectories(thisFile);
-        }
-        else{
+        } else {
             localFileName = thisFile.getAbsolutePath();
         }
     }
 
-    Comparator<? super File> filesComparator = new Comparator<File>(){
+    Comparator<? super File> filesComparator = new Comparator<File>() {
         public int compare(File a, File b) {
             return String.valueOf(a.getName()).compareTo(b.getName());
         }
@@ -111,9 +102,9 @@ public class Open extends ListActivity{
 
         filesStack.pop();
 
-        if(filesStack.empty())
+        if (filesStack.empty())
             super.onBackPressed();
-        else{
+        else {
             File selected = filesStack.pop();
             listDirectories(selected);
         }

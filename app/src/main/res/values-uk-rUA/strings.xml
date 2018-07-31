@@ -1,0 +1,74 @@
+<resources>
+
+    <string name="app_name" translatable="false">TextEditor</string>
+    <string name="action_open">Відкрити</string>
+    <string name="action_save">Зберегти</string>
+    <string name="action_save_as">Зберегти як</string>
+    <string name="action_clear">Очистити</string>
+    <string name="action_settings">Налаштування</string>
+    <string name="action_previous">Відкрити попередній файл</string>
+    <string name="action_undo">Cкасувати</string>
+    <string name="action_redo">Повторити</string>
+
+    <string name="pref_text_color">Колір тексту</string>
+    <string name="pref_back_color">Фон</string>
+
+    <string name="pref_color_green">Зелений</string>
+    <string name="pref_color_red">Червоний</string>
+    <string name="pref_color_black">Чорний</string>
+    <string name="pref_color_white">Білий</string>
+    <string name="pref_color_blue">Синій</string>
+    <string name="pref_color_yellow">Жовтий</string>
+    <string name="pref_color_light_blue">Блакитний</string>
+    <string name="pref_color_gray">Сірий</string>
+    <string name="pref_color_magenta">Бузковий</string>
+    <string name="pref_color_violet">Фіолетовый</string>
+    <string name="pref_color_orange">Жовтогарячий</string>
+    <string name="pref_color_coral">Кораловий</string>
+    <string name="pref_color_maroon">Бордовий</string>
+    <string name="pref_color_moccasin">Бежевий</string>
+
+    <string name="pref_size">Розмір шрифту</string>
+    <string name="pref_size_hint">(від 10 до 600)</string>
+
+    <string name="pref_style">Стиль тексту</string>
+    <string name="pref_style_regular">Звичайний</string>
+    <string name="pref_style_bold">Напівжирний</string>
+    <string name="pref_style_italic">Курсив</string>
+    <string name="pref_style_bold_italic">Напівжирний та курсив</string>
+    <string name="italic_low_case">курсив</string>
+
+    <string name="pref_srift">Шрифт</string>
+    <string name="pref_style_monospace" translatable="false">Monospace</string>
+    <string name="pref_style_serif" translatable="false">Serif</string>
+    <string name="pref_style_default">За замовчуванням</string>
+
+    <string name="pref_first_litera">Велика літера</string>
+    <string name="pref_first_litera_summary">Робити першу літеру речення великою</string>
+    <string name="pref_numeration">Нумерація рядків</string>
+    <string name="pref_language">Мова</string>
+
+    <string name="msg_file_saved">Повний порядок, файл збережено</string>
+    <string name="msg_file_not_saved">Отакої, зберегти не вдалось</string>
+    <string name="msg_file_not_opened">Хм, щось пішло не так</string>
+    <string name="msg_choose_file">Оберіть файл</string>
+
+    <string name="main_hint"> </string>
+
+    <string name="button_save_text">Зберегти</string>
+    <string name="button_save_as_text">Зберегти як</string>
+    <string name="button_cancel_text">Відмінити</string>
+    <string name="button_open_text">Відкрити</string>
+    <string name="button_rewrite_text">Переписати</string>
+    <string name="button_create_text">Створити</string>
+
+    <string name="ok">OK</string>
+    <string name="cancel">Відмінити</string>
+
+    <string name="default_file_name">Вигадай мені ім\'я</string>
+    <string name="unnamed_file">безіменний</string>
+
+    <string name="dlg_quit_app">Ви певні що хочете вийти?</string>
+    <string name="dlg_choose_file_name">Як файл назовемо?</string>
+
+</resources>

@@ -3,47 +3,48 @@
 
     <CheckBoxPreference
         android:key="@string/pref_first_litera"
-        android:summary="Делать первую букву предложения заглавной"
-        android:title=""/>
+        android:summary="@string/pref_first_litera_summary"
+        android:title="@string/pref_first_litera" />
 
     <CheckBoxPreference
         android:key="@string/pref_numeration"
-        android:summary="Нумеровать строки"
-        android:title=""/>
+        android:summary=""
+        android:title="@string/pref_numeration" />
 
     <EditTextPreference
         android:defaultValue="20"
-        android:dialogTitle="Введите размер шрифта (от 10 до 600)"
+        android:dialogTitle="@string/pref_size_hint"
+        android:inputType="numberDecimal"
         android:key="@string/pref_size"
-        android:title="Размер шрифта"
-        android:inputType="numberDecimal"/>
+        android:title="@string/pref_size" />
 
     <ListPreference
         android:defaultValue="1"
-        android:title="Шрифт"
-        android:key="@string/pref_srift"
         android:entries="@array/text_srift"
-        android:entryValues="@array/text_srift" />
+        android:entryValues="@array/text_srift"
+        android:key="@string/pref_srift"
+        android:title="@string/pref_srift" />
 
     <ListPreference
         android:defaultValue="1"
-        android:title="Стиль шрифта"
-        android:key="@string/pref_style"
         android:entries="@array/text_style"
-        android:entryValues="@array/text_style" />
+        android:entryValues="@array/text_style"
+        android:key="@string/pref_style"
+        android:title="@string/pref_style" />
 
     <ListPreference
         android:defaultValue="1"
-        android:title="Цвет текста"
-        android:key="@string/pref_text_color"
         android:entries="@array/text_color"
-        android:entryValues="@array/text_color" />
+        android:entryValues="@array/text_color"
+        android:key="@string/pref_text_color"
+        android:title="@string/pref_text_color" />
 
     <ListPreference
         android:defaultValue="1"
-        android:title="Цвет фона"
-        android:key="@string/pref_back_color"
         android:entries="@array/back_color"
-        android:entryValues="@array/back_color" />
+        android:entryValues="@array/back_color"
+        android:key="@string/pref_back_color"
+        android:title="@string/pref_back_color" />
+
 
 </PreferenceScreen>

@@ -10,67 +10,75 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/header"
+        android:gravity="center_vertical"
         android:textColor="@color/colorAccent"
-        android:textSize="18sp"
-        android:gravity="center_vertical" />
+        android:textSize="18sp" />
 
     <ListView
         android:id="@android:id/list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:choiceMode="singleChoice"
+        android:layout_above="@id/layout_bottom_bar"
         android:layout_below="@id/header"
-        android:layout_above="@id/layout_bottom_bar"/>
+        android:choiceMode="singleChoice" />
 
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/layout_bottom_bar"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:background="@color/bottom_bar"
         android:clickable="true"
         android:focusable="true"
-        android:gravity="center"
+        android:gravity="end"
         android:orientation="horizontal"
-        >
+        android:padding="8dp">
 
-    <Button
-        android:id="@+id/button_rewrite"
-        android:layout_width="115dp"
-        android:layout_height="wrap_content"
-        android:text="@string/button_rewrite_text"
-        android:layout_marginBottom="2dp"
-        style="@style/Widget.AppCompat.Button.Colored">
-    </Button>
+        <Button
+            android:id="@+id/button_rewrite"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="5dp"
+            android:background="@drawable/rect_button"
+            android:text="@string/button_rewrite_text"
+            android:layout_alignParentStart="true"
+            android:textColor="@color/myWhite">
 
-    <Button
-        android:id="@+id/button_create"
-        android:layout_width="115dp"
-        android:layout_height="wrap_content"
-        android:text="@string/button_create_text"
-        android:layout_marginBottom="2dp"
-        style="@style/Widget.AppCompat.Button.Colored">
-    </Button>
+        </Button>
+
+        <Button
+            android:id="@+id/button_create"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@+id/button_rewrite"
+            android:layout_marginEnd="5dp"
+            android:background="@drawable/rect_button"
+            android:text="@string/button_create_text"
+            android:textColor="@color/myWhite">
+
+        </Button>
 
 
-    <Button
-        android:id="@+id/button_cancel_in_save"
-        android:layout_width="115dp"
-        android:layout_height="wrap_content"
-        android:text="@string/button_cancel_text"
-        android:layout_marginBottom="2dp"
-        style="@style/Widget.AppCompat.Button.Colored">
-    </Button>
+        <Button
+            android:id="@+id/button_cancel_in_save"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@+id/button_create"
+            android:background="@drawable/rect_button"
+            android:text="@string/button_cancel_text"
+            android:textColor="@color/myWhite">
 
-    </LinearLayout>
+        </Button>
+
+    </RelativeLayout>
 
 
     <TextView
         android:id="@+id/user_file_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-    </TextView>
 
+    </TextView>
 
 
 </RelativeLayout>

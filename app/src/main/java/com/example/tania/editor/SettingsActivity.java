@@ -5,9 +5,9 @@ import android.os.Bundle;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceFragment;
 
-public class Settings extends PreferenceActivity{
+public class SettingsActivity extends PreferenceActivity {
     @Override
-    public void onCreate(Bundle savedInstanceState){
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getFragmentManager().beginTransaction()
                 .replace(android.R.id.content, new Preferences())
@@ -15,9 +15,9 @@ public class Settings extends PreferenceActivity{
     }
 
     @SuppressLint("ValidFragment")
-    public class Preferences extends PreferenceFragment{
+    public class Preferences extends PreferenceFragment {
         @Override
-        public void onCreate(Bundle savedInstanceState){
+        public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
 
             addPreferencesFromResource(R.xml.preferences);

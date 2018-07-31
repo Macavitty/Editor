@@ -4,70 +4,45 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".MainActivity">
-
-    <item
-        android:id="@+id/add_tab"
-        android:orderInCategory="1"
-        app:showAsAction="always"
-        android:title="@string/action_cancel"
-        android:icon="@drawable/baseline_add_black_18dp"/>
-    <item
-        android:id="@+id/del_tab"
-        android:orderInCategory="1"
-        app:showAsAction="always"
-        android:title="@string/action_cancel"
-        android:icon="@drawable/baseline_clear_black_18dp"/>
-
     <item
         android:id="@+id/action_open"
-        android:orderInCategory="10"
         android:title="@string/action_open"
-        app:showAsAction="always|withText" />
+        android:icon="@drawable/search"
+        app:showAsAction="always" />
 
     <item
         android:id="@+id/action_save"
-        android:orderInCategory="10"
-        app:showAsAction="ifRoom|withText"
-        android:title="@string/action_save"/>
+        android:title="@string/action_save"
+        app:showAsAction="never|withText" />
 
     <item
         android:id="@+id/action_save_as"
-        android:orderInCategory="10"
-        app:showAsAction="never|withText"
-        android:title="@string/action_save_as"/>
+        android:title="@string/action_save_as"
+        app:showAsAction="never|withText" />
 
     <item
         android:id="@+id/action_settings"
-        android:orderInCategory="10"
-        app:showAsAction="never"
-        android:title="@string/action_settings"/>
+        android:icon="@drawable/settings"
+        android:title="@string/action_settings"
+        app:showAsAction="ifRoom" />
 
     <item
-        android:id="@+id/action_new_file"
-        android:orderInCategory="10"
-        android:title="@string/action_new_file"
-        app:showAsAction="ifRoom|withText" />
+        android:id="@+id/action_undo"
+        android:icon="@drawable/undo"
+        android:title="@string/action_undo"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/action_redo"
+        android:icon="@drawable/redo"
+        android:title="@string/action_redo"
+        app:showAsAction="always" />
 
     <item
         android:id="@+id/action_clear"
-        android:orderInCategory="10"
-        app:showAsAction="never"
-        android:title="@string/action_clear"/>
-
-    <item
-        android:id="@+id/action_back"
-        android:orderInCategory="10"
-        app:showAsAction="never"
-        android:title="@string/action_back"
-        android:icon="@drawable/baseline_undo_black_18dp"/>
-
-    <item
-        android:id="@+id/action_cancel"
-        android:orderInCategory="10"
-        app:showAsAction="never|withText"
-        android:title="@string/action_cancel"
-        android:icon="@drawable/baseline_redo_black_18dp"/>
-
+        android:icon="@drawable/clear"
+        android:title="@string/action_clear"
+        app:showAsAction="ifRoom" />
 
 
 </menu>

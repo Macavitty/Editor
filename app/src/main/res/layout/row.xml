@@ -9,15 +9,13 @@
         android:id="@+id/icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="2dp"/>
+        android:layout_marginEnd="3dp" />
 
-
-        <TextView
-            android:id="@+id/item_text"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:gravity="start"
-            android:textSize="18sp"
-            android:layout_toEndOf="@id/icon"/>
-
+    <TextView
+        android:id="@+id/item_text"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@id/icon"
+        android:gravity="start|center_vertical"
+        android:textSize="18sp" />
 </RelativeLayout>
