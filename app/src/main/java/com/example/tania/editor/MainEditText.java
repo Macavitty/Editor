@@ -11,8 +11,8 @@ public class MainEditText extends android.support.v7.widget.AppCompatEditText {
     public static boolean isNumbersNeeded = false;
     int pudding = 100;
 
-    public MainEditText(Context c, AttributeSet a) {
-        super(c, a);
+    public MainEditText(Context context, AttributeSet attributeSet) {
+        super(context, attributeSet);
     }
 
     @Override

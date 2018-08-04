@@ -37,7 +37,6 @@ public class SaveAsActivity extends ListActivity {
     private String localFileName = "";
     private String tmpDirectory = Environment.getExternalStorageDirectory().getPath();
     private TextView textView;
-    //    ListView listView;
     private FileAdapter fileAdapter;
     private String extension = "";
     private Spinner spinner;

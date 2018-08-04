@@ -20,19 +20,9 @@ public class LeafMatEgoFragment extends Fragment {
 
     private String title;
     private EditText editText;
-    private MainPagerAdapter pagerAdapter;
-
-    private Map<Integer, Stack<String>> bufferUndoMap;
-    private Map<Integer, Stack<String>> bufferRedoMap;
-    private Stack<String> bufferUndoStack;
-    private Stack<String> bufferRedoStack;
+    private ViewPagerAdapter pagerAdapter;
     private String editStr = "";
     private RootMatEgoFragment rootMatEgoFragment;
-    private UndoRedoTextWatcher textWatcher;
-
-    static {
-        Log.e("leaf load: ", "true");
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -40,15 +30,45 @@ public class LeafMatEgoFragment extends Fragment {
         Bundle bundle = getArguments();
         title = bundle.getString("data");
 
-        textWatcher = new UndoRedoTextWatcher();
 
         editText = view.findViewById(R.id.editText);
         rootMatEgoFragment = (RootMatEgoFragment) getActivity().getSupportFragmentManager().findFragmentById(R.id.boss_fragment);
         pagerAdapter = rootMatEgoFragment.getAdapter();
-        bufferUndoMap = rootMatEgoFragment.getBufferUndoMap();
-        bufferRedoMap = rootMatEgoFragment.getBufferRedoMap();
+        editText.addTextChangedListener(new TextWatcher() {
+            final Handler handler = new Handler();
+            Runnable runnable;
 
-        setTextWatcher();
+            @Override
+            public void afterTextChanged(Editable s) {
+                runnable = new Runnable() {
+                    @Override
+                    public void run() {
+                        Log.d("run", "i am here");
+
+                       /* //Toast.makeText(getApplicationContext(), "***", Toast.LENGTH_SHORT).show();//
+                        if (!changesBufferUndo.empty() && MainActivity.isReady) {
+                            String s = changesBufferUndo.peek();
+                            if (!s.equals(editText.getText().toString())) {
+                                //Toast.makeText(getApplicationContext(), "**", Toast.LENGTH_SHORT).show();//
+                                changesBufferUndo.add(editText.getText().toString());
+                                //Toast.makeText(getApplicationContext(), "***", Toast.LENGTH_SHORT).show();//
+                            }
+                        } else changesBufferUndo.push(editText.getText().toString());*/
+                    }
+                };
+                handler.postDelayed(runnable, 500);
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                handler.removeCallbacks(runnable);
+            }
+        });
+
         return view;
     }
 
@@ -61,7 +81,6 @@ public class LeafMatEgoFragment extends Fragment {
         editText.setTextColor(MainActivity.textColor);
         editText.setBackgroundColor(MainActivity.backgroundColor);
         editText.setPadding(6, 4, 6, 4);
-        editText.setSelection(MainActivity.cursorPosition);
 
         if (MainActivity.capLitera) editText.setInputType(InputType.TYPE_TEXT_FLAG_CAP_SENTENCES);
         else editText.setInputType(InputType.TYPE_TEXT_FLAG_MULTI_LINE);
@@ -77,67 +96,5 @@ public class LeafMatEgoFragment extends Fragment {
 
     public EditText getEditText() {
         return editText;
-    }
-
-    private class UndoRedoTextWatcher implements TextWatcher{
-        final Handler handler = new Handler();
-        Runnable runnable;
-
-        @Override
-        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-        }
-
-        @Override
-        public void onTextChanged(CharSequence s, int start, int before, int count) {
-            handler.removeCallbacks(runnable);
-        }
-
-        @Override
-        public void afterTextChanged(Editable s) {
-            runnable = new Runnable() {
-                @Override
-                public void run() {
-                    if (MainActivity.isReady) {
-                        Log.e("run", "i am here");
-                        if (bufferUndoMap.get(rootMatEgoFragment.getCurrentTab()) != null) {
-                            editStr = editText.getText().toString();
-                            bufferUndoStack = bufferUndoMap.get(rootMatEgoFragment.getCurrentTab());
-                            bufferRedoStack = bufferRedoMap.get(rootMatEgoFragment.getCurrentTab());
-                            String str = bufferUndoStack.empty() ? "" : bufferUndoStack.peek();
-
-                            if (!str.equals(editStr) && !MainActivity.isPageDeleted) {
-                                bufferUndoStack.push(editStr);
-                                Log.e("push: " + rootMatEgoFragment.getCurrentTab(), editStr);
-                                if (MainActivity.pageJustHasBeenAdded)
-                                    MainActivity.updatesNumberLeft--;
-                                Log.e("Left: ", MainActivity.updatesNumberLeft + "");
-                            }
-                            if (MainActivity.pageJustHasBeenAdded && MainActivity.updatesNumberLeft == -1) {
-                                bufferUndoStack.clear();
-                                Log.e("clear: ", "done");
-                                bufferUndoStack.push("");
-                                Log.e("push space: ", "done");
-                                MainActivity.pageJustHasBeenAdded = false;
-                            }
-
-                            if (MainActivity.isPageDeleted) {
-                                editText.setText(bufferUndoStack.peek());
-                                MainActivity.isPageDeleted = false;
-                            }
-                        }
-                    }
-
-                }
-            };
-            handler.postDelayed(runnable, 500);
-        }
-    }
-
-    public void removeTextWatcher(){
-        if (!editText.equals(null) && !textWatcher.equals(null)) editText.removeTextChangedListener(textWatcher);
-    }
-    public void setTextWatcher(){
-        if (editText != null && textWatcher != null) editText.addTextChangedListener(textWatcher);
     }
 }

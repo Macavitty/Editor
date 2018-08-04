@@ -7,8 +7,8 @@
         android:title="@string/pref_first_litera" />
 
     <CheckBoxPreference
-        android:key="@string/pref_numeration"
         android:summary=""
+        android:key="@string/pref_numeration"
         android:title="@string/pref_numeration" />
 
     <EditTextPreference

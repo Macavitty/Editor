@@ -86,19 +86,18 @@ public class FileAdapter extends ArrayAdapter {
             else if (path.endsWith(".pdf")) imageView.setImageResource(R.drawable.pdf);
             else if (path.endsWith(".xls")) imageView.setImageResource(R.drawable.xls);
 
-            else if (path.endsWith(".gif") || path.endsWith(".m4v") || path.endsWith(".mp4") || path.endsWith(".3gp"))
+            else if (path.endsWith(".mov") || path.endsWith(".m4v") || path.endsWith(".mp4") || path.endsWith(".3gp") || path.endsWith(".avi"))
                 imageView.setImageResource(R.drawable.video);
 
             else if (path.endsWith(".jpg") || path.endsWith(".png") || path.endsWith(".img") || path.endsWith(".JPG"))
                 imageView.setImageResource(R.drawable.image);
 
-            else if (path.endsWith(".mp3") || path.endsWith(".mpc") || path.endsWith(".wav"))
+            else if (path.endsWith(".mp3") || path.endsWith(".mpc") || path.endsWith(".wav") || path.endsWith(".mpa") || path.endsWith(".ra") || path.endsWith(".mid"))
                 imageView.setImageResource(R.drawable.audio);
 
             else imageView.setImageResource(R.drawable.file);
         }
 
-        //ListView listView = (ListView) view.;
         if (!selected[position])
             view.setBackgroundColor(Color.TRANSPARENT);
         else

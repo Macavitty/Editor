@@ -31,11 +31,11 @@
 
         <Spinner
             android:id="@+id/extension_spinner"
-            style="@style/Base.Widget.AppCompat.Spinner.Underlined"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:entries="@array/extension"
             android:layout_weight="2"
+            style="@style/Base.Widget.AppCompat.Spinner.Underlined"
             >
 
         </Spinner>

@@ -4,8 +4,8 @@
     <string name="dlg_choose_file_name">So, what is the file name?</string>
 
     <string name="app_name" translatable="false">TextEditor</string>
-    <string name="action_open">Открыть</string>
     <string name="action_save">Сохранить</string>
+    <string name="action_open">Открыть</string>
     <string name="action_save_as">Сохранить как</string>
     <string name="action_clear">Очистить</string>
     <string name="action_settings">Настройки</string>

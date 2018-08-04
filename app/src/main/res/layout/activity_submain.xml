@@ -27,9 +27,9 @@
 
     <Button
         android:id="@+id/add_button"
+        android:layout_above="@+id/remove_button"
         android:layout_width="60dp"
         android:layout_height="60dp"
-        android:layout_above="@+id/remove_button"
         android:layout_alignParentEnd="true"
         android:layout_margin="5dp"
         android:background="@drawable/round_button"

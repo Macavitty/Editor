@@ -1,8 +1,8 @@
 <resources>
 
     <string name="app_name" translatable="false">TextEditor</string>
-    <string name="action_open">Відкрити</string>
     <string name="action_save">Зберегти</string>
+    <string name="action_open">Відкрити</string>
     <string name="action_save_as">Зберегти як</string>
     <string name="action_clear">Очистити</string>
     <string name="action_settings">Налаштування</string>

@@ -19,7 +19,6 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import java.io.BufferedReader;
-import java.io.Console;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -27,7 +26,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.util.Arrays;
-import java.util.Iterator;
 import java.util.Map;
 import java.util.Stack;
 
@@ -36,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
 
     private TabLayout tabLayout;
     private EditText editText;
-    private MainPagerAdapter pagerAdapter;
+    private ViewPagerAdapter pagerAdapter;
 
     private RootMatEgoFragment rootMatEgoFragment;
     private LeafMatEgoFragment leafMatEgoFragment;
@@ -48,30 +46,21 @@ public class MainActivity extends AppCompatActivity {
     private boolean gotoSaveAs = false;
 
     private String buffer = ""; // make it private at the end
-    private Stack<String> bufferUndoStack;
+    /*private Stack<String> bufferUndoStack;
     private Stack<String> bufferRedoStack;
     private Map<Integer, Stack<String>> bufferUndoMap;
-    private Map<Integer, Stack<String>> bufferRedoMap;
+    private Map<Integer, Stack<String>> bufferRedoMap;*/
 
     static int typefaceStyle = Typeface.NORMAL;
     static int textColor = Color.rgb(0, 128, 0);
     static int backgroundColor = Color.rgb(255, 225, 90);
-    static int cursorPosition = 0;
     static float textSize;
-    static boolean pageJustHasBeenAdded = false;
-    static boolean updatesNumberLeftIsNeeded = true;
-    static int updatesNumberLeft = 0;
     static boolean capLitera = false;
     static boolean isReady = true; // kostyl for handling textChangesListener
-    static boolean textFromBufferIsNeeded = false;
     static boolean canceled = false;
     static String fileName = "", directory = "", newFile = "";
     static Typeface typefaceFont = Typeface.DEFAULT;
     static boolean isPageDeleted = false;
-
-    static boolean isAddingPage = false;
-    static boolean isRemovingPage = false;
-
 
 
     @Override
@@ -83,49 +72,26 @@ public class MainActivity extends AppCompatActivity {
         final String DEFAULT_PAGE_NAME = getString(R.string.default_file_name);
 
         rootMatEgoFragment = (RootMatEgoFragment) this.getSupportFragmentManager().findFragmentById(R.id.boss_fragment);
-//        edit.setSingleLine(false);
         tabLayout = findViewById(R.id.sliding_tabs);
         pagerAdapter = rootMatEgoFragment.getAdapter();
         addButton = findViewById(R.id.add_button);
         removeButton = findViewById(R.id.remove_button);
 
-        rootMatEgoFragment.addTab(DEFAULT_PAGE_NAME);
-
-        bufferUndoMap = rootMatEgoFragment.getBufferUndoMap();
-        bufferRedoMap = rootMatEgoFragment.getBufferRedoMap();
-        bufferRedoStack = bufferRedoMap.get(rootMatEgoFragment.getCurrentTab());
-        bufferUndoStack = bufferUndoMap.get(rootMatEgoFragment.getCurrentTab());
-
+        rootMatEgoFragment.addTab(DEFAULT_PAGE_NAME, pagerAdapter);
 
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                pageJustHasBeenAdded = true;
-                updatesNumberLeft = pagerAdapter.getCount();
-                //if(updatesNumberLeft>1)updatesNumberLeft -= updatesNumberLeft/2 + updatesNumberLeft%2==0 ? 1 : 0;
-                Log.e("Left first: ", updatesNumberLeft+"");
-                rootMatEgoFragment.addTab(DEFAULT_PAGE_NAME);
-                //if(!bufferUndoStack.empty())bufferUndoStack.pop();
-
+                pagerAdapter = rootMatEgoFragment.getAdapter();
+                rootMatEgoFragment.addTab(DEFAULT_PAGE_NAME, pagerAdapter);
             }
         });
 
         removeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (pagerAdapter.getCount() > 1){
-                    leafMatEgoFragment = (LeafMatEgoFragment)pagerAdapter.getItem(rootMatEgoFragment.getCurrentTab());
-                    leafMatEgoFragment.setTextWatcher();
-                    Log.e("size", bufferUndoMap.size()+"");
-                    rootMatEgoFragment.deleteTab(rootMatEgoFragment.getCurrentTab(), bufferUndoMap, bufferRedoMap);
-                    bufferUndoMap = rootMatEgoFragment.getBufferUndoMap();
-                    bufferRedoMap = rootMatEgoFragment.getBufferRedoMap();
-                    bufferRedoStack = bufferRedoMap.get(rootMatEgoFragment.getCurrentTab());
-                    bufferUndoStack = bufferUndoMap.get(rootMatEgoFragment.getCurrentTab());
-                    isPageDeleted = true;
-                    Log.e("size", bufferUndoMap.size()+"");
-
-
+                if (pagerAdapter.getCount() > 1) {
+                    rootMatEgoFragment.deleteTab(rootMatEgoFragment.getCurrentTab());
                 }
             }
         });
@@ -185,12 +151,12 @@ public class MainActivity extends AppCompatActivity {
             // It works correctly!
             // if smth wrong look somewhere else
             case R.id.action_undo:
-                leafMatEgoFragment.removeTextWatcher();
+                /*leafMatEgoFragment.removeTextWatcher();
                 if (!bufferUndoStack.empty()) {
                     isReady = false;
                     Log.e("uundo" + currentPagePosition + ": ", Arrays.deepToString(bufferUndoStack.toArray()));
                     /*if (bufferUndoStack.size() != 1) */
-                    String fuckThisStacks = bufferUndoStack.pop();
+                    /*String fuckThisStacks = bufferUndoStack.pop();
                     //bufferUndoStack.pop();
                     //bufferRedoStack.push(fuckThisStacks);
                     Log.e("poped" + currentPagePosition + ": ", fuckThisStacks);
@@ -203,11 +169,11 @@ public class MainActivity extends AppCompatActivity {
                     //editText.setSelection(cursorPosition);
                     isReady = true;
                 }
-                leafMatEgoFragment.setTextWatcher();
+                leafMatEgoFragment.setTextWatcher();*/
                 return true;
 
             case R.id.action_redo:
-                leafMatEgoFragment.removeTextWatcher();
+                /*leafMatEgoFragment.removeTextWatcher();
                 bufferUndoMap = rootMatEgoFragment.getBufferUndoMap();
                 bufferRedoMap = rootMatEgoFragment.getBufferRedoMap();
                 bufferRedoStack = bufferRedoMap.get(currentPagePosition);
@@ -222,7 +188,7 @@ public class MainActivity extends AppCompatActivity {
                     editText.setSelection(cursorPosition);
                     isReady = true;
                 }
-                leafMatEgoFragment.setTextWatcher();
+                leafMatEgoFragment.setTextWatcher();*/
                 return true;
             // ***
 
@@ -322,6 +288,9 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    /*
+    * it do not updates text in others tabs with the same file opened
+    * (but should it?)*/
     private void saveFile() {
         leafMatEgoFragment = (LeafMatEgoFragment) pagerAdapter.getItem(rootMatEgoFragment.getCurrentTab());
         editText = leafMatEgoFragment.getEditText();

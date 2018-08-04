@@ -11,17 +11,17 @@
     <color name="header">#fdf6f780</color>
     <color name="numeration">#fb647452</color>
 
-    <color name="myYellow">#fbf5f581</color>
+    <color name="myCorral">#fb647452</color>
     <color name="myGrey">#fbc7d2ba</color>
+    <color name="myBlue">#fbabdaf5</color>
+    <color name="myPurple">#fbe39dfc</color>
     <color name="myLilac">#fbfab1e8</color>
     <color name="myBeige">#fbf9d3b4</color>
-    <color name="myVinous">#fbdf1f06</color>
-    <color name="myCorral">#fb647452</color>
-    <color name="myPurple">#fbe39dfc</color>
-    <color name="myOrange">#fbf9a03b</color>
-    <color name="myBlue">#fbabdaf5</color>
-    <color name="myGreen">#fbc8fa6b</color>
     <color name="myWhite">#fbffffff</color>
+    <color name="myVinous">#fbdf1f06</color>
+    <color name="myOrange">#fbf9a03b</color>
+    <color name="myYellow">#fbf5f581</color>
+    <color name="myGreen">#fbc8fa6b</color>
 
     <color name="toolbar">#dff160</color>
     <color name="selectedTab">#fbe9fa6b</color>

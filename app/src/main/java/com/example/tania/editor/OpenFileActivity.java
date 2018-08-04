@@ -55,7 +55,7 @@ public class OpenFileActivity extends ListActivity {
                     Toast.makeText(getApplicationContext(), getString(R.string.msg_choose_file), Toast.LENGTH_LONG).show();
                 else {
                     MainActivity.fileName = localFileName;
-                    OpenFileActivity.super.onBackPressed(); // may not work
+                    OpenFileActivity.super.onBackPressed();
                 }
             }
         });

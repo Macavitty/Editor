@@ -14,29 +14,25 @@ import android.view.ViewGroup;
 import java.util.ArrayList;
 
 
-public class MainPagerAdapter extends FragmentStatePagerAdapter {
+public class ViewPagerAdapter extends FragmentStatePagerAdapter {
 
     private ArrayList<Fragment> fragmentsList = new ArrayList<>();
     private ArrayList<String> titlesList = new ArrayList<>();
-    private ViewPager pager;
-    private TabLayout layout;
 
-    public MainPagerAdapter(FragmentManager manager, Context context, ViewPager pager, TabLayout layout) {
+    public ViewPagerAdapter(FragmentManager manager) {
         super(manager);
-        this.pager = pager;
-        this.layout = layout;
     }
 
     @Override
     public Fragment getItem(int position) {
-            return fragmentsList.get(position);
+        Log.d("*** * getItem", position + "");
+        return fragmentsList.get(position);
     }
 
     @Override
     public int getItemPosition(@NonNull Object object) {
         return POSITION_NONE;
     }
-
 
     @Override
     public int getCount() {
@@ -57,28 +53,14 @@ public class MainPagerAdapter extends FragmentStatePagerAdapter {
         titlesList.add(s);
     }
 
-    public void removeFrag(int position) {
-        removeTab(position);
-        Fragment f = fragmentsList.get(position);
-        fragmentsList.remove(f);
-        titlesList.remove(position);
-        destroyFragmentView(pager, position, f);
-        pager.setOffscreenPageLimit(200);
-        notifyDataSetChanged();
+    public Fragment getFragment(int position) {
+        return fragmentsList.get(position);
     }
 
-    public void removeTab(int position) {
-        if (layout.getChildCount() > 0) {
-            layout.removeTabAt(position);
-        }
+    public String getTitle(int position) {
+        return titlesList.get(position);
     }
-
-    public void destroyFragmentView(ViewGroup container, int position, Object object) {
-        FragmentManager manager = ((Fragment) object).getFragmentManager();
-        FragmentTransaction trans = manager.beginTransaction();
-        trans.remove((Fragment) object);
-        trans.commit();
-    }
-
-
 }
+
+
+

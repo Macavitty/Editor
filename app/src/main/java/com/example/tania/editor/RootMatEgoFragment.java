@@ -3,16 +3,14 @@ package com.example.tania.editor;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 import java.util.Stack;
 
@@ -20,7 +18,7 @@ public class RootMatEgoFragment extends Fragment {
 
     private TabLayout layout;
     private ViewPager pager;
-    private MainPagerAdapter adapter;
+    private ViewPagerAdapter adapter;
     private int currentTab;
     private LeafMatEgoFragment leafMatEgoFragment;
     private Map<Integer, Stack<String>> bufferUndoMap = new HashMap<>();
@@ -31,17 +29,13 @@ public class RootMatEgoFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.root_fragment, container, false);
         pager = view.findViewById(R.id.viewpager);
-
-        // это очень важный костыль, обеспечивающий корректную работу undo/redo
-        pager.setOffscreenPageLimit(200);
-
         layout = view.findViewById(R.id.sliding_tabs);
-        adapter = new MainPagerAdapter(getFragmentManager(), getActivity(), pager, layout);
+        adapter = new ViewPagerAdapter(getFragmentManager());
         pager.setAdapter(adapter);
+
         layout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                //super.onTabSelected(tab);
                 pager.setCurrentItem(tab.getPosition());
                 currentTab = tab.getPosition();
             }
@@ -58,79 +52,40 @@ public class RootMatEgoFragment extends Fragment {
         return view;
     }
 
-    public void addTab(String title) {
+    public void addTab(String title, ViewPagerAdapter adapter) {
         Bundle bundle = new Bundle();
         bundle.putString("data", title);
-        currentTab = adapter.getCount(); // DO NOT REMOVE: it should be here !!!!
-        Log.e("add: ", currentTab+"");
-
         leafMatEgoFragment = new LeafMatEgoFragment();
         leafMatEgoFragment.setArguments(bundle);
-        bufferRedoMap.put(currentTab, new Stack<String>());
-        bufferUndoMap.put(currentTab, new Stack<String>());
         adapter.addFrag(leafMatEgoFragment, title);
         adapter.notifyDataSetChanged();
         layout.setupWithViewPager(pager);
-        pager.setCurrentItem(adapter.getCount()-1);
-        leafMatEgoFragment.setTextWatcher();
-        }
-
-    public void deleteTab(int position, Map<Integer, Stack<String>> u, Map<Integer, Stack<String>> r) {
-        bufferRedoMap = new HashMap<>();
-        bufferUndoMap = new HashMap<>();
-
-        for (Map.Entry me : u.entrySet()) {
-            int p = (Integer)me.getKey();
-            Stack<String> s = (Stack<String>)me.getValue();
-            if (p < position){
-                bufferUndoMap.put(p, s);
-                System.out.println(p + " = " + s);
-            }
-            else if (p > position){
-                bufferUndoMap.put(p-1, s);
-                System.out.println(p + " = " + s);
-            }
-        }
-        System.out.println(bufferUndoMap.size() + ": undo");
-        for (Map.Entry me : r.entrySet()) {
-            int p = (Integer)me.getKey();
-            Stack<String> s = (Stack<String>)me.getValue();
-            if (p < position){
-                bufferRedoMap.put(p, s);
-            }
-            else if (p > position){
-                bufferRedoMap.put(p-1, s);
-            }
-        }
-        adapter.removeFrag(position);
-        leafMatEgoFragment.setTextWatcher();
+        currentTab = adapter.getCount() - 1;
+        pager.setCurrentItem(adapter.getCount() - 1);
     }
 
-    public MainPagerAdapter getAdapter() {
+    public void deleteTab(int position) {
+        Log.e("*** remove", position + "");
+        ViewPagerAdapter newAdapter = new ViewPagerAdapter(getFragmentManager());
+        for (int i = 0; i < adapter.getCount(); i++) {
+            if (i != position) {
+                newAdapter.addFrag(adapter.getFragment(i), adapter.getTitle(i));
+                newAdapter.notifyDataSetChanged();
+            }
+
+        }
+        this.adapter = newAdapter;
+        pager.setAdapter(newAdapter);
+        layout.setupWithViewPager(pager);
+        currentTab = newAdapter.getCount() - 1;
+        pager.setCurrentItem(currentTab);
+    }
+
+    public ViewPagerAdapter getAdapter() {
         return adapter;
     }
 
     public int getCurrentTab() {
         return currentTab;
-    }
-
-    public Map<Integer, Stack<String>> getBufferUndoMap(){
-        Log.e("getBufferUndoMap", "*");
-        return bufferUndoMap;
-    }
-
-    public Map<Integer, Stack<String>> getBufferRedoMap(){
-        Log.e("getBufferRedoMap", "*");
-        return bufferRedoMap;
-    }
-    public void setBufferUndoMap(Map<Integer, Stack<String>> u){
-        bufferUndoMap = u;
-    }
-
-    public void setBufferRedoMap(Map<Integer, Stack<String>> r){
-        bufferRedoMap = r;
-    }
-    public void setLimitToPager(){
-        pager.setOffscreenPageLimit(200);
     }
 }
