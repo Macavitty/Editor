@@ -41,7 +41,8 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public CharSequence getPageTitle(int position) {
-        return titlesList.get(position);
+        String tmp = titlesList.get(position);
+        return tmp.contains("/") ? tmp.substring(tmp.lastIndexOf("/") + 1, tmp.length()) : tmp;
     }
 
     public void setPageTitle(int position, String title) { // use it after open

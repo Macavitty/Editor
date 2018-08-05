@@ -36,8 +36,11 @@ public class RootMatEgoFragment extends Fragment {
         layout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                pager.setCurrentItem(tab.getPosition());
                 currentTab = tab.getPosition();
+                pager.setCurrentItem(currentTab);
+                String tmp = adapter.getTitle(currentTab);
+                MainActivity.fileName = tmp.contains("/") ? tmp : "";
+                Log.d("name *", "filename: " + MainActivity.fileName + " tab: " + currentTab);
             }
 
             @Override
@@ -77,7 +80,7 @@ public class RootMatEgoFragment extends Fragment {
         this.adapter = newAdapter;
         pager.setAdapter(newAdapter);
         layout.setupWithViewPager(pager);
-        currentTab = newAdapter.getCount() - 1;
+        currentTab = position < newAdapter.getCount() - 1 ? position : newAdapter.getCount();
         pager.setCurrentItem(currentTab);
     }
 

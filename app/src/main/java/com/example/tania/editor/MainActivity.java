@@ -90,6 +90,7 @@ public class MainActivity extends AppCompatActivity {
         removeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                pagerAdapter = rootMatEgoFragment.getAdapter();
                 if (pagerAdapter.getCount() > 1) {
                     rootMatEgoFragment.deleteTab(rootMatEgoFragment.getCurrentTab());
                 }
@@ -326,9 +327,11 @@ public class MainActivity extends AppCompatActivity {
                 builder.append(line + "\n");
             }
             inputStream.close();
+
             title = fileName.substring(fileName.lastIndexOf("/") + 1, fileName.length());
             editText.setText(builder.toString());
-            pagerAdapter.setPageTitle(rootMatEgoFragment.getCurrentTab(), title);
+            pagerAdapter = rootMatEgoFragment.getAdapter();
+            pagerAdapter.setPageTitle(rootMatEgoFragment.getCurrentTab(), fileName);
             tabLayout.getTabAt(rootMatEgoFragment.getCurrentTab()).setText(title);
         } catch (Throwable t) {
             Toast.makeText(getApplicationContext(), getString(R.string.msg_file_not_opened), Toast.LENGTH_SHORT).show();
@@ -336,11 +339,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void createFile() {
-        new File(directory, newFile);
-        fileName = directory + "/" + newFile;
-        saveFile();
-    }
 
     private void saveTextToBuffer() {
         leafMatEgoFragment = (LeafMatEgoFragment) pagerAdapter.getItem(rootMatEgoFragment.getCurrentTab());
