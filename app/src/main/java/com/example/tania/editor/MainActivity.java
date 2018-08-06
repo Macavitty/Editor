@@ -85,10 +85,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+                refreshPagerAdapter();
                 if (pagerAdapter.getCount() > 1) {
-
                     final int CURRENT_TAB = rootFragment.getCurrentTab();
-                    refreshPagerAdapter();
                     refreshLeafFragment();
                     if (!leafFragment.getEditText().getText().toString().equals(leafFragment.getUntaughtText())) {
 
