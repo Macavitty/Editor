@@ -1,5 +1,6 @@
 package com.example.tania.editor;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -10,7 +11,6 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -25,9 +25,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
-import java.util.Arrays;
-import java.util.Map;
-import java.util.Stack;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -36,14 +33,11 @@ public class MainActivity extends AppCompatActivity {
     private EditText editText;
     private ViewPagerAdapter pagerAdapter;
 
-    private RootMatEgoFragment rootMatEgoFragment;
-    private LeafMatEgoFragment leafMatEgoFragment;
-
-    private Button addButton;
-    private Button removeButton;
+    private RootMatEgoFragment rootFragment;
+    private LeafMatEgoFragment leafFragment;
 
     private boolean goToOpen = false;
-    private boolean gotoSaveAs = false;
+    private boolean goToSaveAs = false;
 
     private String buffer = ""; // make it private at the end
     /*private Stack<String> bufferUndoStack;
@@ -57,11 +51,10 @@ public class MainActivity extends AppCompatActivity {
     static float textSize;
     static boolean capLitera = false;
     static boolean isReady = true; // kostyl for handling textChangesListener
+    static boolean isPageDeleted = false;
     static boolean canceled = false;
     static String fileName = "", directory = "", newFile = "";
     static Typeface typefaceFont = Typeface.DEFAULT;
-    static boolean isPageDeleted = false;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,30 +62,58 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_submain);
 
-        final String DEFAULT_PAGE_NAME = getString(R.string.default_file_name);
+        final String DEFAULT_PAGE_NAME = this.getString(R.string.default_file_name);
 
-        rootMatEgoFragment = (RootMatEgoFragment) this.getSupportFragmentManager().findFragmentById(R.id.boss_fragment);
+        rootFragment = (RootMatEgoFragment) this.getSupportFragmentManager().findFragmentById(R.id.boss_fragment);
+        refreshPagerAdapter();
         tabLayout = findViewById(R.id.sliding_tabs);
-        pagerAdapter = rootMatEgoFragment.getAdapter();
-        addButton = findViewById(R.id.add_button);
-        removeButton = findViewById(R.id.remove_button);
 
-        rootMatEgoFragment.addTab(DEFAULT_PAGE_NAME, pagerAdapter);
+        rootFragment.addTab(DEFAULT_PAGE_NAME, pagerAdapter);
 
+        Button addButton = findViewById(R.id.add_button);
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                pagerAdapter = rootMatEgoFragment.getAdapter();
-                rootMatEgoFragment.addTab(DEFAULT_PAGE_NAME, pagerAdapter);
+                refreshPagerAdapter();
+                rootFragment.addTab(DEFAULT_PAGE_NAME, pagerAdapter);
             }
         });
 
+        Button removeButton = findViewById(R.id.remove_button);
         removeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                pagerAdapter = rootMatEgoFragment.getAdapter();
+
                 if (pagerAdapter.getCount() > 1) {
-                    rootMatEgoFragment.deleteTab(rootMatEgoFragment.getCurrentTab());
+
+                    final int CURRENT_TAB = rootFragment.getCurrentTab();
+                    refreshPagerAdapter();
+                    refreshLeafFragment();
+                    if (!leafFragment.getEditText().getText().toString().equals(leafFragment.getUntaughtText())) {
+
+                        AlertDialog.Builder saveDialog = new AlertDialog.Builder(MainActivity.this);
+                        saveDialog.setTitle(getString(R.string.dlg_save_changes));
+
+                        saveDialog.setPositiveButton(getString(R.string.dlg_positive), new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                if (pagerAdapter.getTitle(CURRENT_TAB).equals(DEFAULT_PAGE_NAME))
+                                    goToSaveAs();
+                                else
+                                    saveFile(false);
+                                rootFragment.deleteTab(CURRENT_TAB);
+                            }
+                        });
+
+                        saveDialog.setNegativeButton(getString(R.string.dlg_negative), new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                rootFragment.deleteTab(CURRENT_TAB);
+                            }
+                        });
+                        saveDialog.show();
+                    } else
+                        rootFragment.deleteTab(CURRENT_TAB);
                 }
             }
         });
@@ -108,35 +129,29 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
-        int currentPagePosition = rootMatEgoFragment.getCurrentTab();
-        leafMatEgoFragment = (LeafMatEgoFragment) pagerAdapter.getItem(currentPagePosition);
-        editText = leafMatEgoFragment.getEditText();
+        int currentPagePosition = rootFragment.getCurrentTab();
+        refreshLeafFragment();
+        editText = leafFragment.getEditText();
         Intent intent = new Intent();
 
         switch (item.getItemId()) {
 
             case R.id.action_save:
-                if (!fileName.equals("")) saveFile();
+                if (!fileName.equals("")) saveFile(true);
                 else {
                     //saveTextToBuffer();
-                    gotoSaveAs = true;
-                    intent.setClass(this, SaveAsActivity.class);
-                    startActivity(intent);
+                    goToSaveAs();
                 }
                 return true;
 
             case R.id.action_save_as:
                 //saveTextToBuffer();
-                gotoSaveAs = true;
-                intent.setClass(this, SaveAsActivity.class);
-                startActivity(intent);
+                goToSaveAs();
                 return true;
 
             case R.id.action_open:
+                goToOpen();
                 //saveTextToBuffer();
-                goToOpen = true;
-                intent.setClass(this, OpenFileActivity.class);
-                startActivity(intent);
                 return true;
 
             case R.id.action_settings:
@@ -276,10 +291,10 @@ public class MainActivity extends AppCompatActivity {
         }
 
         //  After SaveAsActivity  //
-        else if (gotoSaveAs) {
-            gotoSaveAs = false;
+        else if (goToSaveAs) {
+            goToSaveAs = false;
             if (!canceled) {
-                if (!fileName.equals("")) saveFile();
+                if (!fileName.equals("")) saveFile(true);
             } else {
                 canceled = false;
                 //textFromBufferIsNeeded = true;
@@ -289,12 +304,62 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    private void goToSaveAs() {
+        goToSaveAs = true;
+        Intent intent = new Intent();
+        intent.setClass(this, SaveAsActivity.class);
+        startActivity(intent);
+    }
+
+    private void goToOpen() {
+        final String DEFAULT_PAGE_NAME = this.getString(R.string.default_file_name);
+        goToOpen = true;
+        final Intent intent = new Intent();
+        intent.setClass(this, OpenFileActivity.class);
+
+        final int currentTab = rootFragment.getCurrentTab();
+        refreshPagerAdapter();
+        refreshLeafFragment();
+        if (!leafFragment.getEditText().getText().toString().equals(leafFragment.getUntaughtText())) {
+
+            AlertDialog.Builder saveDialog = new AlertDialog.Builder(MainActivity.this);
+            saveDialog.setTitle(getString(R.string.dlg_save_changes));
+
+            saveDialog.setPositiveButton(getString(R.string.dlg_positive), new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    if (pagerAdapter.getTitle(currentTab).equals(DEFAULT_PAGE_NAME)) {
+                        // ПОРЯДОК ВАЖЕН !
+                        startActivity(intent);
+                        goToSaveAs();
+                    } else {
+                        saveFile(false);
+                        startActivity(intent);
+                    }
+
+
+                }
+            });
+
+            saveDialog.setNegativeButton(getString(R.string.dlg_negative), new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    startActivity(intent);
+
+                }
+            });
+            saveDialog.show();
+        } else
+            startActivity(intent);
+    }
+
     /*
-    * it do not updates text in others tabs with the same file opened
-    * (but should it?)*/
-    private void saveFile() {
-        leafMatEgoFragment = (LeafMatEgoFragment) pagerAdapter.getItem(rootMatEgoFragment.getCurrentTab());
-        editText = leafMatEgoFragment.getEditText();
+     * it don`t updates text in others tabs with the same file opened
+     * (but should it?)*/
+    private void saveFile(boolean needToOpenFile) {
+        refreshPagerAdapter();
+        refreshLeafFragment();
+        editText = leafFragment.getEditText();
 
         try {
             FileOutputStream outputStream = new FileOutputStream(fileName);
@@ -302,7 +367,7 @@ public class MainActivity extends AppCompatActivity {
             out.write(editText.getText().toString());
             out.close();
             Toast.makeText(getApplicationContext(), getString(R.string.msg_file_saved), Toast.LENGTH_SHORT).show();
-            openFile();
+            if (needToOpenFile) openFile();
         } catch (IOException e) {
             Toast.makeText(getApplicationContext(), getString(R.string.msg_file_not_saved), Toast.LENGTH_SHORT).show();
             e.printStackTrace();
@@ -310,8 +375,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void openFile() {
-        leafMatEgoFragment = (LeafMatEgoFragment) pagerAdapter.getItem(rootMatEgoFragment.getCurrentTab());
-        editText = leafMatEgoFragment.getEditText();
+        refreshLeafFragment();
+        editText = leafFragment.getEditText();
         String title;
         try {
 
@@ -330,28 +395,42 @@ public class MainActivity extends AppCompatActivity {
 
             title = fileName.substring(fileName.lastIndexOf("/") + 1, fileName.length());
             editText.setText(builder.toString());
-            pagerAdapter = rootMatEgoFragment.getAdapter();
-            pagerAdapter.setPageTitle(rootMatEgoFragment.getCurrentTab(), fileName);
-            tabLayout.getTabAt(rootMatEgoFragment.getCurrentTab()).setText(title);
+            leafFragment.setUntaughtText(builder.toString());
+            refreshPagerAdapter();
+            pagerAdapter.setPageTitle(rootFragment.getCurrentTab(), fileName);
+            tabLayout.getTabAt(rootFragment.getCurrentTab()).setText(title);
         } catch (Throwable t) {
             Toast.makeText(getApplicationContext(), getString(R.string.msg_file_not_opened), Toast.LENGTH_SHORT).show();
             t.printStackTrace();
         }
     }
 
-
     private void saveTextToBuffer() {
-        leafMatEgoFragment = (LeafMatEgoFragment) pagerAdapter.getItem(rootMatEgoFragment.getCurrentTab());
-        editText = leafMatEgoFragment.getEditText();
+        refreshLeafFragment();
+        editText = leafFragment.getEditText();
         buffer = editText.getText().toString();
         Toast.makeText(getApplicationContext(), buffer, Toast.LENGTH_SHORT).show();
     }
 
-    public void quitDialogue() {
-        AlertDialog.Builder quitDialog = new AlertDialog.Builder(this);
-        quitDialog.setTitle(getString(R.string.dlg_quit_app));
+    private void refreshPagerAdapter() {
+        pagerAdapter = rootFragment.getAdapter();
     }
 
+    private void refreshLeafFragment() {
+        leafFragment = (LeafMatEgoFragment) pagerAdapter.getItem(rootFragment.getCurrentTab());
+    }
+
+    private long backPressed;
+
+    @Override
+    public void onBackPressed() {
+        if (backPressed + 2000 > System.currentTimeMillis())
+            super.onBackPressed();
+        else
+            Toast.makeText(getBaseContext(), getString(R.string.msg_press_again),
+                    Toast.LENGTH_SHORT).show();
+        backPressed = System.currentTimeMillis();
+    }
 }
 
 

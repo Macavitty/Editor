@@ -13,27 +13,20 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 
-import java.util.Map;
-import java.util.Stack;
-
 public class LeafMatEgoFragment extends Fragment {
 
-    private String title;
     private EditText editText;
-    private ViewPagerAdapter pagerAdapter;
     private String editStr = "";
-    private RootMatEgoFragment rootMatEgoFragment;
+    private RootMatEgoFragment rootFragment;
+
+    private String untaughtText = "";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.leaf_fragment, container, false);
-        Bundle bundle = getArguments();
-        title = bundle.getString("data");
-
 
         editText = view.findViewById(R.id.editText);
-        rootMatEgoFragment = (RootMatEgoFragment) getActivity().getSupportFragmentManager().findFragmentById(R.id.boss_fragment);
-        pagerAdapter = rootMatEgoFragment.getAdapter();
+        rootFragment = (RootMatEgoFragment) getActivity().getSupportFragmentManager().findFragmentById(R.id.boss_fragment);
         editText.addTextChangedListener(new TextWatcher() {
             final Handler handler = new Handler();
             Runnable runnable;
@@ -96,5 +89,13 @@ public class LeafMatEgoFragment extends Fragment {
 
     public EditText getEditText() {
         return editText;
+    }
+
+    public String getUntaughtText() {
+        return untaughtText;
+    }
+
+    public void setUntaughtText(String untaughtText) {
+        this.untaughtText = untaughtText;
     }
 }

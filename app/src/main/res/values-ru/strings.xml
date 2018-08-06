@@ -56,6 +56,7 @@
     <string name="msg_file_not_saved">Увы, не получилось</string>
     <string name="msg_file_not_opened">Хм, что-то пошло не так</string>
     <string name="msg_choose_file">Выберите файл</string>
+    <string name="msg_press_again">Нажмите ещё раз для выхода</string>
 
     <string name="main_hint"> поехали!</string>
 
@@ -71,5 +72,8 @@
 
     <string name="default_file_name">Придумай мне имя</string>
     <string name="unnamed_file">безымянный</string>
+    <string name="dlg_save_changes">Сохранить изменения?</string>
+    <string name="dlg_positive">Таки да</string>
+    <string name="dlg_negative">Нет</string>
 
 </resources>

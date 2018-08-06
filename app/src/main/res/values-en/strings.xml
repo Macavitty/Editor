@@ -53,6 +53,7 @@
     <string name="msg_file_not_saved">Alas, failed</string>
     <string name="msg_file_not_opened">Hm, smth went wrong</string>
     <string name="msg_choose_file">Please, choose a file</string>
+    <string name="msg_press_again">Press once again to exit</string>
 
     <string name="main_hint">your text goes here</string>
 
@@ -71,5 +72,8 @@
 
     <string name="dlg_quit_app">Do you really want to quit?</string>
     <string name="dlg_choose_file_name">So, what is the file name?</string>
+    <string name="dlg_save_changes">Save changes?</string>
+    <string name="dlg_positive">Yes</string>
+    <string name="dlg_negative">Yesn`t</string>
 
 </resources>

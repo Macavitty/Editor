@@ -3,7 +3,6 @@ package com.example.tania.editor;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -20,7 +19,7 @@ public class RootMatEgoFragment extends Fragment {
     private ViewPager pager;
     private ViewPagerAdapter adapter;
     private int currentTab;
-    private LeafMatEgoFragment leafMatEgoFragment;
+    private LeafMatEgoFragment leafFragment;
     private Map<Integer, Stack<String>> bufferUndoMap = new HashMap<>();
     private Map<Integer, Stack<String>> bufferRedoMap = new HashMap<>();
 
@@ -56,11 +55,10 @@ public class RootMatEgoFragment extends Fragment {
     }
 
     public void addTab(String title, ViewPagerAdapter adapter) {
-        Bundle bundle = new Bundle();
-        bundle.putString("data", title);
-        leafMatEgoFragment = new LeafMatEgoFragment();
-        leafMatEgoFragment.setArguments(bundle);
-        adapter.addFrag(leafMatEgoFragment, title);
+        leafFragment = new LeafMatEgoFragment();
+        leafFragment.setUntaughtText("");
+        // leafFragment.setArguments(bundle);
+        adapter.addFrag(leafFragment, title);
         adapter.notifyDataSetChanged();
         layout.setupWithViewPager(pager);
         currentTab = adapter.getCount() - 1;

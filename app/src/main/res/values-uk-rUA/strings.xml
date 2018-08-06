@@ -52,6 +52,7 @@
     <string name="msg_file_not_saved">Отакої, зберегти не вдалось</string>
     <string name="msg_file_not_opened">Хм, щось пішло не так</string>
     <string name="msg_choose_file">Оберіть файл</string>
+    <string name="msg_press_again">Натисніть ще раз щоби вийти</string>
 
     <string name="main_hint"> </string>
 
@@ -70,5 +71,8 @@
 
     <string name="dlg_quit_app">Ви певні що хочете вийти?</string>
     <string name="dlg_choose_file_name">Як файл назовемо?</string>
+    <string name="dlg_save_changes">Зберегти зміни?</string>
+    <string name="dlg_positive">Авжеж</string>
+    <string name="dlg_negative">Ні</string>
 
 </resources>
