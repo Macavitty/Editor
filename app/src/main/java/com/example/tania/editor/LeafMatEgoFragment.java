@@ -13,11 +13,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 
+import java.util.ArrayDeque;
+import java.util.Deque;
+import java.util.Stack;
+
 public class LeafMatEgoFragment extends Fragment {
 
     private EditText editText;
     private String editStr = "";
     private RootMatEgoFragment rootFragment;
+    private Deque<String> undoStack;
+    private Deque<String> redoStack;
 
     private String untaughtText = "";
 
@@ -26,6 +32,8 @@ public class LeafMatEgoFragment extends Fragment {
         View view = inflater.inflate(R.layout.leaf_fragment, container, false);
 
         editText = view.findViewById(R.id.editText);
+        undoStack = new ArrayDeque<>();
+        redoStack = new ArrayDeque<>();
         rootFragment = (RootMatEgoFragment) getActivity().getSupportFragmentManager().findFragmentById(R.id.boss_fragment);
         editText.addTextChangedListener(new TextWatcher() {
             final Handler handler = new Handler();
@@ -38,15 +46,13 @@ public class LeafMatEgoFragment extends Fragment {
                     public void run() {
                         Log.d("run", "i am here");
 
-                       /* //Toast.makeText(getApplicationContext(), "***", Toast.LENGTH_SHORT).show();//
-                        if (!changesBufferUndo.empty() && MainActivity.isReady) {
-                            String s = changesBufferUndo.peek();
+                        if (undoStack.size() > 0 && MainActivity.isReady) {
+                            String s = undoStack.peek();
                             if (!s.equals(editText.getText().toString())) {
-                                //Toast.makeText(getApplicationContext(), "**", Toast.LENGTH_SHORT).show();//
-                                changesBufferUndo.add(editText.getText().toString());
-                                //Toast.makeText(getApplicationContext(), "***", Toast.LENGTH_SHORT).show();//
+                                undoStack.push(editText.getText().toString());
                             }
-                        } else changesBufferUndo.push(editText.getText().toString());*/
+                        } else if (undoStack.size() == 0 && MainActivity.isReady)
+                            undoStack.push(editText.getText().toString());
                     }
                 };
                 handler.postDelayed(runnable, 500);
@@ -80,11 +86,6 @@ public class LeafMatEgoFragment extends Fragment {
 
         editText.setSingleLine(false);
 
-        /*if (MainActivity.textFromBufferIsNeeded) {
-            editText.setText("buffer");
-            MainActivity.textFromBufferIsNeeded = false;
-        }*/
-
     }
 
     public EditText getEditText() {
@@ -97,5 +98,21 @@ public class LeafMatEgoFragment extends Fragment {
 
     public void setUntaughtText(String untaughtText) {
         this.untaughtText = untaughtText;
+    }
+
+    public Deque<String> getUndoStack() {
+        return undoStack;
+    }
+
+    public Deque<String> getRedoStack() {
+        return redoStack;
+    }
+
+    public void setUndoStack(Deque<String> undoStack) {
+        this.undoStack = undoStack;
+    }
+
+    public void setRedoStack(Deque<String> redoStack) {
+        this.redoStack = redoStack;
     }
 }

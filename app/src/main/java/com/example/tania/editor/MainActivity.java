@@ -11,6 +11,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -25,6 +26,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.util.Arrays;
+import java.util.Deque;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -40,10 +43,8 @@ public class MainActivity extends AppCompatActivity {
     private boolean goToSaveAs = false;
 
     private String buffer = ""; // make it private at the end
-    /*private Stack<String> bufferUndoStack;
-    private Stack<String> bufferRedoStack;
-    private Map<Integer, Stack<String>> bufferUndoMap;
-    private Map<Integer, Stack<String>> bufferRedoMap;*/
+    private Deque<String> undoStack;
+    private Deque<String> redoStack;
 
     static int typefaceStyle = Typeface.NORMAL;
     static int textColor = Color.rgb(0, 128, 0);
@@ -128,8 +129,6 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
-        int currentPagePosition = rootFragment.getCurrentTab();
         refreshLeafFragment();
         editText = leafFragment.getEditText();
         Intent intent = new Intent();
@@ -163,50 +162,37 @@ public class MainActivity extends AppCompatActivity {
                 editText.setText("");
                 return true;
 
-            // ***
-            // It works correctly!
-            // if smth wrong look somewhere else
+            // TODO track cursor position
             case R.id.action_undo:
-                /*leafMatEgoFragment.removeTextWatcher();
-                if (!bufferUndoStack.empty()) {
+                undoStack = leafFragment.getUndoStack();
+                redoStack = leafFragment.getRedoStack();
+                if (undoStack.size() > 0) {
                     isReady = false;
-                    Log.e("uundo" + currentPagePosition + ": ", Arrays.deepToString(bufferUndoStack.toArray()));
-                    /*if (bufferUndoStack.size() != 1) */
-                    /*String fuckThisStacks = bufferUndoStack.pop();
-                    //bufferUndoStack.pop();
-                    //bufferRedoStack.push(fuckThisStacks);
-                    Log.e("poped" + currentPagePosition + ": ", fuckThisStacks);
-                    Log.e("uundo" + currentPagePosition + ": ", Arrays.deepToString(bufferUndoStack.toArray()));
-
-                    String s = bufferUndoStack.peek();
-                    rootMatEgoFragment.setBufferRedoMap(bufferRedoMap);
-                    rootMatEgoFragment.setBufferUndoMap(bufferUndoMap);
-                    editText.setText(s);
+                    Log.d("undo", Arrays.deepToString(undoStack.toArray()));
+                    if (!undoStack.peek().equals(redoStack.peek()))
+                        redoStack.push(undoStack.pop());
+                    Log.d("redo", Arrays.deepToString(redoStack.toArray()));
+                    editText.setText(undoStack.peek());
                     //editText.setSelection(cursorPosition);
+                    leafFragment.setRedoStack(redoStack);
+                    leafFragment.setUndoStack(undoStack);
                     isReady = true;
                 }
-                leafMatEgoFragment.setTextWatcher();*/
                 return true;
 
             case R.id.action_redo:
-                /*leafMatEgoFragment.removeTextWatcher();
-                bufferUndoMap = rootMatEgoFragment.getBufferUndoMap();
-                bufferRedoMap = rootMatEgoFragment.getBufferRedoMap();
-                bufferRedoStack = bufferRedoMap.get(currentPagePosition);
-                bufferUndoStack = bufferUndoMap.get(currentPagePosition);
-                if (!bufferRedoStack.empty()) {
+                undoStack = leafFragment.getUndoStack();
+                redoStack = leafFragment.getRedoStack();
+                if (redoStack.size() > 0) {
                     isReady = false;
-                    Log.e("redo", currentPagePosition+"");
-                    String s = bufferRedoStack.pop();
-                    rootMatEgoFragment.setBufferRedoMap(bufferRedoMap);
-                    rootMatEgoFragment.setBufferUndoMap(bufferUndoMap);
-                    editText.setText(s);
-                    editText.setSelection(cursorPosition);
+                    if (editText.getText().toString().equals(redoStack.peek())) redoStack.pop();
+                    if (redoStack.size() > 0) editText.setText(redoStack.pop());
+                    //editText.setSelection(cursorPosition);
+                    leafFragment.setUndoStack(undoStack);
+                    leafFragment.setRedoStack(redoStack);
                     isReady = true;
                 }
-                leafMatEgoFragment.setTextWatcher();*/
                 return true;
-            // ***
 
             default:
                 return true;
