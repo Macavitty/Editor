@@ -22,7 +22,7 @@
         android:layout_below="@id/header"
         android:choiceMode="singleChoice" />
 
-    <RelativeLayout
+    <LinearLayout
         android:id="@+id/layout_bottom_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -36,22 +36,24 @@
 
         <Button
             android:id="@+id/button_rewrite"
+            android:layout_weight="1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="5dp"
+            android:layout_marginEnd="3dp"
+            android:layout_marginStart="3dp"
             android:background="@drawable/rect_button"
             android:text="@string/button_rewrite_text"
-            android:layout_alignParentStart="true"
             android:textColor="@color/myWhite">
 
         </Button>
 
         <Button
             android:id="@+id/button_create"
+            android:layout_weight="1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toEndOf="@+id/button_rewrite"
-            android:layout_marginEnd="5dp"
+            android:layout_marginEnd="3dp"
+            android:layout_marginStart="3dp"
             android:text="@string/button_create_text"
             android:background="@drawable/rect_button"
             android:textColor="@color/myWhite">
@@ -61,16 +63,18 @@
 
         <Button
             android:id="@+id/button_cancel_in_save"
+            android:layout_weight="1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toEndOf="@+id/button_create"
+            android:layout_marginEnd="3dp"
+            android:layout_marginStart="3dp"
             android:text="@string/button_cancel_text"
             android:background="@drawable/rect_button"
             android:textColor="@color/myWhite">
 
         </Button>
 
-    </RelativeLayout>
+    </LinearLayout>
 
 
     <TextView

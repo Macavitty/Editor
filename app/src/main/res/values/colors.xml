@@ -30,7 +30,8 @@
     <color name="transparent">#01c8fa6b</color>
 
     <color name="add_remove_button_inner">#71b40b</color>
-    <color name="add_remove_button_outer">#8771b40b</color>
+    <color name="add_remove_button_middle">#d977b914</color>
+    <color name="add_remove_button_outer">#8f71b40b</color>
     <color name="button_text">#faecffd0</color>
 
 
