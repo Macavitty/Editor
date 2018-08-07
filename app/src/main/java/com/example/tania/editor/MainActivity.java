@@ -1,13 +1,17 @@
 package com.example.tania.editor;
 
+import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -52,10 +56,13 @@ public class MainActivity extends AppCompatActivity {
     static float textSize;
     static boolean capLitera = false;
     static boolean isReady = true; // kostyl for handling textChangesListener
-    static boolean isPageDeleted = false;
     static boolean canceled = false;
     static String fileName = "", directory = "", newFile = "";
     static Typeface typefaceFont = Typeface.DEFAULT;
+
+    int permissionWriteStatus = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+    int permissionReadStatus = ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE);
+    private static final int PERMISSION_REQUEST_CODE = 123;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -297,6 +304,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void goToOpen() {
+
         final String DEFAULT_PAGE_NAME = this.getString(R.string.default_file_name);
         goToOpen = true;
         final Intent intent = new Intent();
@@ -338,6 +346,7 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
     }
 
+
     /*
      * it don`t updates text in others tabs with the same file opened
      * (but should it?)*/
@@ -371,7 +380,6 @@ public class MainActivity extends AppCompatActivity {
             BufferedReader reader = new BufferedReader(isr);
             String line;
             StringBuilder builder = new StringBuilder();
-            //leafMatEgoFragment = new LeafMatEgoFragment();
 
             while ((line = reader.readLine()) != null) {
                 builder.append(line + "\n");
@@ -416,6 +424,7 @@ public class MainActivity extends AppCompatActivity {
                     Toast.LENGTH_SHORT).show();
         backPressed = System.currentTimeMillis();
     }
+
 }
 
 
