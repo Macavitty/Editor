@@ -16,9 +16,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:tabMode="scrollable"
-            android:background="#fcfafab2"
+            android:background="@color/tab_layout"
             app:tabIndicatorHeight="4dp"
-            app:tabIndicatorColor="#9e9e9e"
+            app:tabIndicatorColor="@color/indicator"
+            app:tabTextColor="@color/tab_text"
             />
     </android.support.design.widget.AppBarLayout>
 

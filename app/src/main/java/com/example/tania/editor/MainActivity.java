@@ -60,8 +60,8 @@ public class MainActivity extends AppCompatActivity {
     static String fileName = "", directory = "", newFile = "";
     static Typeface typefaceFont = Typeface.DEFAULT;
 
-    int permissionWriteStatus = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
-    int permissionReadStatus = ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE);
+//    int permissionWriteStatus = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+//    int permissionReadStatus = ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE);
     private static final int PERMISSION_REQUEST_CODE = 123;
 
     @Override
@@ -236,6 +236,7 @@ public class MainActivity extends AppCompatActivity {
         if (tcolor.contains(getString(R.string.pref_color_green))) textColor = Color.rgb(0, 128, 0);
         if (tcolor.contains(getString(R.string.pref_color_blue))) textColor = Color.BLUE;
         if (tcolor.contains(getString(R.string.pref_color_gray))) textColor = Color.GRAY;
+        if (tcolor.contains(getString(R.string.pref_color_yellow))) textColor = ContextCompat.getColor(this, R.color.myYellow);
         if (tcolor.contains(getString(R.string.pref_color_magenta))) textColor = Color.MAGENTA;
 
         String color = sp.getString(getString(R.string.pref_back_color), "");
