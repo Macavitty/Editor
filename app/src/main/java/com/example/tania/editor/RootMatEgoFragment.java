@@ -39,7 +39,7 @@ public class RootMatEgoFragment extends Fragment {
                 pager.setCurrentItem(currentTab);
                 String tmp = adapter.getTitle(currentTab);
                 MainActivity.fileName = tmp.contains("/") ? tmp : "";
-                Log.d("name *", "filename: " + MainActivity.fileName + " tab: " + currentTab);
+                Log.e("name *", "filename: " + MainActivity.fileName + " curTab: " + currentTab);
             }
 
             @Override
@@ -78,7 +78,8 @@ public class RootMatEgoFragment extends Fragment {
         this.adapter = newAdapter;
         pager.setAdapter(newAdapter);
         layout.setupWithViewPager(pager);
-        currentTab = position < newAdapter.getCount() - 1 ? position : newAdapter.getCount();
+        currentTab = position < newAdapter.getCount() - 1 ? position : newAdapter.getCount()-1;
+        Log.d("curTab after remove", currentTab+"");
         pager.setCurrentItem(currentTab);
     }
 
