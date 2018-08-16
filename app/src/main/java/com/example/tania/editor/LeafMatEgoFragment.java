@@ -85,6 +85,7 @@ public class LeafMatEgoFragment extends Fragment {
         else editText.setInputType(InputType.TYPE_TEXT_FLAG_MULTI_LINE);
 
         editText.setSingleLine(false);
+        editText.setSelection(MainActivity.cursorPosition);
 
     }
 

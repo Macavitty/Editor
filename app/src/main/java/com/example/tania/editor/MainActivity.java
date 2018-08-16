@@ -30,6 +30,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.util.ArrayDeque;
 import java.util.Arrays;
 import java.util.Deque;
 
@@ -53,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
     static int typefaceStyle = Typeface.NORMAL;
     static int textColor = Color.rgb(0, 128, 0);
     static int backgroundColor = Color.rgb(255, 225, 90);
+    static int cursorPosition = 0;
     static float textSize;
     static boolean capLitera = false;
     static boolean isReady = true; // kostyl for handling textChangesListener
@@ -60,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
     static String fileName = "", directory = "", newFile = "";
     static Typeface typefaceFont = Typeface.DEFAULT;
 
-//    int permissionWriteStatus = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+    //    int permissionWriteStatus = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
 //    int permissionReadStatus = ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE);
     private static final int PERMISSION_REQUEST_CODE = 123;
 
@@ -137,6 +139,7 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         refreshLeafFragment();
         editText = leafFragment.getEditText();
+        cursorPosition = editText.getSelectionEnd();
         Intent intent = new Intent();
 
         switch (item.getItemId()) {
@@ -168,7 +171,6 @@ public class MainActivity extends AppCompatActivity {
                 editText.setText("");
                 return true;
 
-            // TODO track cursor position
             case R.id.action_undo:
                 undoStack = leafFragment.getUndoStack();
                 redoStack = leafFragment.getRedoStack();
@@ -179,7 +181,11 @@ public class MainActivity extends AppCompatActivity {
                         redoStack.push(undoStack.pop());
                     Log.d("redo", Arrays.deepToString(redoStack.toArray()));
                     editText.setText(undoStack.peek());
-                    //editText.setSelection(cursorPosition);
+                    try {
+                        editText.setSelection(cursorPosition);
+                    } catch (IndexOutOfBoundsException e) {
+                        editText.setSelection(editText.length());
+                    }
                     leafFragment.setRedoStack(redoStack);
                     leafFragment.setUndoStack(undoStack);
                     isReady = true;
@@ -193,7 +199,11 @@ public class MainActivity extends AppCompatActivity {
                     isReady = false;
                     if (editText.getText().toString().equals(redoStack.peek())) redoStack.pop();
                     if (redoStack.size() > 0) editText.setText(redoStack.pop());
-                    //editText.setSelection(cursorPosition);
+                    try {
+                        editText.setSelection(cursorPosition);
+                    } catch (IndexOutOfBoundsException e) {
+                        editText.setSelection(editText.length());
+                    }
                     leafFragment.setUndoStack(undoStack);
                     leafFragment.setRedoStack(redoStack);
                     isReady = true;
@@ -236,7 +246,8 @@ public class MainActivity extends AppCompatActivity {
         if (tcolor.contains(getString(R.string.pref_color_green))) textColor = Color.rgb(0, 128, 0);
         if (tcolor.contains(getString(R.string.pref_color_blue))) textColor = Color.BLUE;
         if (tcolor.contains(getString(R.string.pref_color_gray))) textColor = Color.GRAY;
-        if (tcolor.contains(getString(R.string.pref_color_yellow))) textColor = ContextCompat.getColor(this, R.color.myYellow);
+        if (tcolor.contains(getString(R.string.pref_color_yellow)))
+            textColor = ContextCompat.getColor(this, R.color.myYellow);
         if (tcolor.contains(getString(R.string.pref_color_magenta))) textColor = Color.MAGENTA;
 
         String color = sp.getString(getString(R.string.pref_back_color), "");
@@ -276,7 +287,7 @@ public class MainActivity extends AppCompatActivity {
         if (goToOpen) {
             goToOpen = false;
             if (!canceled) {
-                if (!fileName.equals("")) openFile();
+                if (!fileName.equals("")) openFile(false);
             } else {
                 canceled = false;
                 //textFromBufferIsNeeded = true;
@@ -362,14 +373,15 @@ public class MainActivity extends AppCompatActivity {
             out.write(editText.getText().toString());
             out.close();
             Toast.makeText(getApplicationContext(), getString(R.string.msg_file_saved), Toast.LENGTH_SHORT).show();
-            if (needToOpenFile) openFile();
+            if (needToOpenFile) openFile(true);
         } catch (IOException e) {
             Toast.makeText(getApplicationContext(), getString(R.string.msg_file_not_saved), Toast.LENGTH_SHORT).show();
             e.printStackTrace();
         }
     }
 
-    private void openFile() {
+    private void openFile(boolean blef) {
+        refreshPagerAdapter();
         refreshLeafFragment();
         editText = leafFragment.getEditText();
         String title;
@@ -393,6 +405,10 @@ public class MainActivity extends AppCompatActivity {
             refreshPagerAdapter();
             pagerAdapter.setPageTitle(rootFragment.getCurrentTab(), fileName);
             tabLayout.getTabAt(rootFragment.getCurrentTab()).setText(title);
+            if (!blef) {
+                leafFragment.setUndoStack(new ArrayDeque<String>());
+                leafFragment.setRedoStack(new ArrayDeque<String>());
+            }
         } catch (Throwable t) {
             Toast.makeText(getApplicationContext(), getString(R.string.msg_file_not_opened), Toast.LENGTH_SHORT).show();
             t.printStackTrace();
