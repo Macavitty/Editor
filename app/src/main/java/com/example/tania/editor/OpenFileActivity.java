@@ -93,6 +93,8 @@ public class OpenFileActivity extends ListActivity {
 
     Comparator<? super File> filesComparator = new Comparator<File>() {
         public int compare(File a, File b) {
+            if (a.isDirectory() && !b.isDirectory()) return -1;
+            else if (!a.isDirectory() && b.isDirectory()) return 1;
             return String.valueOf(a.getName()).compareTo(b.getName());
         }
     };
