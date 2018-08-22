@@ -22,7 +22,7 @@
         android:layout_below="@id/header"
         android:choiceMode="singleChoice" />
 
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/layout_bottom_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -36,11 +36,11 @@
 
         <Button
             android:id="@+id/button_rewrite"
-            android:layout_weight="1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="3dp"
-            android:layout_marginStart="3dp"
+            android:layout_marginEnd="2dp"
+            android:padding="5dp"
+            android:layout_toStartOf="@+id/button_create"
             android:background="@drawable/rect_button"
             android:text="@string/button_rewrite_text"
             android:textColor="@color/button_text">
@@ -49,11 +49,12 @@
 
         <Button
             android:id="@+id/button_create"
-            android:layout_weight="1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="3dp"
             android:layout_marginStart="3dp"
+            android:padding="6dp"
+            android:layout_toStartOf="@+id/button_cancel_in_save"
             android:text="@string/button_create_text"
             android:background="@drawable/rect_button"
             android:textColor="@color/button_text">
@@ -63,18 +64,19 @@
 
         <Button
             android:id="@+id/button_cancel_in_save"
-            android:layout_weight="1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="3dp"
-            android:layout_marginStart="3dp"
+            android:layout_marginEnd="2dp"
+            android:layout_marginStart="2dp"
+            android:padding="6dp"
+            android:layout_alignParentEnd="true"
             android:text="@string/button_cancel_text"
             android:background="@drawable/rect_button"
             android:textColor="@color/button_text">
 
         </Button>
 
-    </LinearLayout>
+    </RelativeLayout>
 
 
     <TextView

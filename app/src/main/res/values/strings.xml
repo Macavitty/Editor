@@ -28,6 +28,8 @@
     <string name="pref_color_coral">Coral</string>
     <string name="pref_color_maroon">Maroon</string>
     <string name="pref_color_moccasin">Moccasin</string>
+    <string name="pref_color_pink">Pink</string>
+    <string name="pref_color_navy">Navy</string>
 
     <string name="pref_size">Font size</string>
     <string name="pref_size_hint">(from 10 to 600)</string>

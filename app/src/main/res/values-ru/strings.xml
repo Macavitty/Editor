@@ -1,9 +1,8 @@
 <resources>
 
-    <string name="dlg_quit_app">Do you really want to quit?</string>
-    <string name="dlg_choose_file_name">So, what is the file name?</string>
+    <string name="dlg_choose_file_name">Как файл назовём?</string>
 
-    <string name="app_name" translatable="false">TextEditor</string>
+    <string name="app_name">TextEditor</string>
     <string name="action_save">Сохранить</string>
     <string name="action_open">Открыть</string>
     <string name="action_save_as">Сохранить как</string>
@@ -31,6 +30,8 @@
     <string name="pref_color_coral">Корраловый</string>
     <string name="pref_color_maroon">Бордовый</string>
     <string name="pref_color_moccasin">Бежевый</string>
+    <string name="pref_color_pink">Розовый</string>
+    <string name="pref_color_navy">Синий</string>
 
     <string name="pref_size">Размер шрифта</string>
     <string name="pref_size_hint">(от 10 до 600)</string>
@@ -58,7 +59,7 @@
     <string name="msg_choose_file">Выберите файл</string>
     <string name="msg_press_again">Нажмите ещё раз для выхода</string>
 
-    <string name="main_hint"> поехали!</string>
+    <string name="main_hint"> </string>
 
     <string name="button_save_text">Сохранить</string>
     <string name="button_save_as_text">Сохранить как</string>

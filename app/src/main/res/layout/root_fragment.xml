@@ -20,6 +20,7 @@
             app:tabIndicatorHeight="4dp"
             app:tabIndicatorColor="@color/indicator"
             app:tabTextColor="@color/tab_text"
+            app:tabSelectedTextColor="@color/button_text"
             />
     </android.support.design.widget.AppBarLayout>
 

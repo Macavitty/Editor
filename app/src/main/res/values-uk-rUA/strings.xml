@@ -1,6 +1,6 @@
 <resources>
 
-    <string name="app_name" translatable="false">TextEditor</string>
+    <string name="app_name">TextEditor</string>
     <string name="action_save">Зберегти</string>
     <string name="action_open">Відкрити</string>
     <string name="action_save_as">Зберегти як</string>
@@ -27,6 +27,8 @@
     <string name="pref_color_coral">Кораловий</string>
     <string name="pref_color_maroon">Бордовий</string>
     <string name="pref_color_moccasin">Бежевий</string>
+    <string name="pref_color_pink">Рожевий</string>
+    <string name="pref_color_navy">Синій</string>
 
     <string name="pref_size">Розмір шрифту</string>
     <string name="pref_size_hint">(від 10 до 600)</string>
@@ -58,13 +60,13 @@
 
     <string name="button_save_text">Зберегти</string>
     <string name="button_save_as_text">Зберегти як</string>
-    <string name="button_cancel_text">Відмінити</string>
+    <string name="button_cancel_text">Скасувати</string>
     <string name="button_open_text">Відкрити</string>
     <string name="button_rewrite_text">Переписати</string>
     <string name="button_create_text">Створити</string>
 
     <string name="ok">OK</string>
-    <string name="cancel">Відмінити</string>
+    <string name="cancel">Скасувати</string>
 
     <string name="default_file_name">Вигадай мені ім\'я</string>
     <string name="unnamed_file">безіменний</string>

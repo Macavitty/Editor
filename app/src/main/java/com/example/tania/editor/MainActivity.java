@@ -139,7 +139,8 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         refreshLeafFragment();
         editText = leafFragment.getEditText();
-        cursorPosition = editText.getSelectionEnd();
+        if (editText == null) cursorPosition = 0;
+        else cursorPosition = editText.getSelectionEnd();
         Intent intent = new Intent();
 
         switch (item.getItemId()) {
@@ -172,10 +173,10 @@ public class MainActivity extends AppCompatActivity {
                 return true;
 
             case R.id.action_undo:
+                isReady = false;
                 undoStack = leafFragment.getUndoStack();
                 redoStack = leafFragment.getRedoStack();
                 if (undoStack.size() > 0) {
-                    isReady = false;
                     Log.d("undo", Arrays.deepToString(undoStack.toArray()));
                     if (!undoStack.peek().equals(redoStack.peek()))
                         redoStack.push(undoStack.pop());
@@ -193,10 +194,10 @@ public class MainActivity extends AppCompatActivity {
                 return true;
 
             case R.id.action_redo:
+                isReady = false;
                 undoStack = leafFragment.getUndoStack();
                 redoStack = leafFragment.getRedoStack();
                 if (redoStack.size() > 0) {
-                    isReady = false;
                     if (editText.getText().toString().equals(redoStack.peek())) redoStack.pop();
                     if (redoStack.size() > 0) editText.setText(redoStack.pop());
                     try {
@@ -274,6 +275,10 @@ public class MainActivity extends AppCompatActivity {
             backgroundColor = Color.rgb(255, 127, 80);
         if (color.contains(getString(R.string.pref_color_maroon)))
             backgroundColor = ContextCompat.getColor(this, R.color.myVinous);
+        if (color.contains(getString(R.string.pref_color_pink)))
+            backgroundColor = ContextCompat.getColor(this, R.color.myPink);
+        if (color.contains(getString(R.string.pref_color_navy)))
+            backgroundColor = ContextCompat.getColor(this, R.color.myNavy);
 
         if (sp.getBoolean(getString(R.string.pref_first_litera), false)) // work please
             capLitera = true;
@@ -325,6 +330,7 @@ public class MainActivity extends AppCompatActivity {
         final int currentTab = rootFragment.getCurrentTab();
         refreshPagerAdapter();
         refreshLeafFragment();
+        // ! по почти неизвестным причинам иногда вылезает null !
         if (!leafFragment.getEditText().getText().toString().equals(leafFragment.getUntaughtText())) {
 
             AlertDialog.Builder saveDialog = new AlertDialog.Builder(MainActivity.this);

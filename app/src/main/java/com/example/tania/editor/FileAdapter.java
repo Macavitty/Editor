@@ -27,7 +27,6 @@ public class FileAdapter extends ArrayAdapter {
     private boolean[] selected;
     private LayoutInflater inflater;
 
-
     public FileAdapter(ArrayList<File> list, Context context, int resources) {
         super(context, resources);
         this.selected = new boolean[list.size()];
@@ -82,9 +81,9 @@ public class FileAdapter extends ArrayAdapter {
         //else if (!list.get(position).getAbsolutePath().contains(".") || pattern.matcher(list.get(position).getAbsolutePath()).matches())
         else {
             if (path.endsWith(".txt")) imageView.setImageResource(R.drawable.txt);
-            else if (path.endsWith(".doc")) imageView.setImageResource(R.drawable.doc);
+            else if (path.endsWith(".doc") || path.endsWith(".docx")) imageView.setImageResource(R.drawable.doc);
             else if (path.endsWith(".pdf")) imageView.setImageResource(R.drawable.pdf);
-            else if (path.endsWith(".xls")) imageView.setImageResource(R.drawable.xls);
+            else if (path.endsWith(".xls") || path.endsWith(".xlsx")) imageView.setImageResource(R.drawable.xls);
 
             else if (path.endsWith(".mov") || path.endsWith(".m4v") || path.endsWith(".mp4") || path.endsWith(".3gp") || path.endsWith(".avi"))
                 imageView.setImageResource(R.drawable.video);

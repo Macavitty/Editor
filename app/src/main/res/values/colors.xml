@@ -1,36 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#7cca16</color>
+    <color name="colorPrimary">#73bc14</color>
     <color name="colorPrimaryDark">#8a2ce7</color>
-    <color name="colorAccent">#155601</color>
+    <color name="colorAccent">#1e7902</color>
     <color name="background">#fafafa</color>
     <color name="colorSelectedText">#fbfcf9</color>
     <color name="colorNotSelectedText">#02250a</color>
-    <color name="colorSelectedBackground">#fce2c5f9</color>
-    <color name="bottom_bar">#fce5cbf9</color>
-    <color name="header">#fce0bff9</color>
+    <color name="colorSelectedBackground">#fac2a8</color>
+    <color name="bottom_bar">#ce6b3d</color>
+    <color name="header">#ce6b3d</color>
     <color name="numeration">#fb647452</color>
-    <color name="tab_layout">#daa8fa</color>
-    <color name="tab_text">#9462b6</color>
+    <color name="tab_layout">#ce6b3d</color>
+    <color name="tab_text">#f7c8b1</color>
 
     <color name="myCorral">#fb647452</color>
     <color name="myGrey">#fbc7d2ba</color>
-    <color name="myBlue">#fbabdaf5</color>
-    <color name="myPurple">#fbd190fc</color>
-    <color name="myLilac">#fbfab1e8</color>
+    <color name="myBlue">#fbaadcf9</color>
+    <color name="myPurple">#fbc982f7</color>
+    <color name="myLilac">#fbf8b3fa</color>
     <color name="myBeige">#fbfcdbc0</color>
     <color name="myWhite">#fbffffff</color>
-    <color name="myVinous">#fbdf1f06</color>
-    <color name="myOrange">#fbf9a03b</color>
-    <color name="myYellow">#fbf5f581</color>
-    <color name="myGreen">#fbc8fa6b</color>
+    <color name="myVinous">#fbb11a07</color>
+    <color name="myOrange">#ff9b00</color>
+    <color name="myYellow">#fdfd61</color>
+    <color name="myGreen">#fbc5fa62</color>
+    <color name="myPink">#fda6ca</color>
+    <color name="myNavy">#140586</color>
 
-    <color name="indicator">#a3a1a1</color>
+    <color name="indicator">#f7c8b1</color>
 
     <color name="transparent">#01c8fa6b</color>
 
-    <color name="round_button_inner">#7cca16</color>
-    <color name="round_button_outer">#7cca16</color>
+    <color name="round_button_inner">#73bc14</color>
+    <color name="round_button_outer">#73bc14</color>
     <color name="button_text">#ffffff</color>
 
 

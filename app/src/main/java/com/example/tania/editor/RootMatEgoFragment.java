@@ -90,4 +90,8 @@ public class RootMatEgoFragment extends Fragment {
     public int getCurrentTab() {
         return currentTab;
     }
+
+    public TabLayout getLayout() {
+        return layout;
+    }
 }
