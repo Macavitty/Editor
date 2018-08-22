@@ -2,6 +2,8 @@ package com.example.tania.editor;
 
 import android.graphics.Typeface;
 import android.os.Handler;
+import android.support.design.widget.TabLayout;
+import android.support.design.widget.TabLayout.Tab;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.text.Editable;
@@ -35,6 +37,7 @@ public class LeafMatEgoFragment extends Fragment {
         undoStack = new ArrayDeque<>();
         redoStack = new ArrayDeque<>();
         rootFragment = (RootMatEgoFragment) getActivity().getSupportFragmentManager().findFragmentById(R.id.boss_fragment);
+        final TabLayout layout = rootFragment.getLayout();
         editText.addTextChangedListener(new TextWatcher() {
             final Handler handler = new Handler();
             Runnable runnable;
@@ -46,10 +49,17 @@ public class LeafMatEgoFragment extends Fragment {
                     public void run() {
                         Log.d("run", "i am here");
 
+                        Tab tab = layout.getTabAt(rootFragment.getCurrentTab());
+                        String tabName = tab.getText().toString();
+                        String tabText = editText.getText().toString();
+
+                        /*
+                        * handling undo buffer
+                        */
                         if (undoStack.size() > 0 && MainActivity.isReady) {
                             String s = undoStack.peek();
-                            if (!s.equals(editText.getText().toString())) {
-                                undoStack.push(editText.getText().toString());
+                            if (!s.equals(tabText)) {
+                                undoStack.push(tabText);
                             }
                         } else if (undoStack.size() == 0 && MainActivity.isReady)
                             undoStack.push(editText.getText().toString());
@@ -65,6 +75,21 @@ public class LeafMatEgoFragment extends Fragment {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 handler.removeCallbacks(runnable);
+                Tab tab = layout.getTabAt(rootFragment.getCurrentTab());
+                String tabName = tab.getText().toString();
+                String tabText = editText.getText().toString();
+
+                /*
+                 * handling '*' in tab name
+                 * с надеждой, что никому не захочется назвать свой файл "* "
+                 */
+
+                if (!untaughtText.equals(tabText)
+                        && !tabName.startsWith("* ")) tab.setText("* " + tabName);
+                else if (untaughtText.equals(tabText)
+                        && tabName.startsWith("* ")) tab.setText(tabName.substring(1, tabName.length()));
+
+
             }
         });
 
@@ -85,8 +110,11 @@ public class LeafMatEgoFragment extends Fragment {
         else editText.setInputType(InputType.TYPE_TEXT_FLAG_MULTI_LINE);
 
         editText.setSingleLine(false);
-        editText.setSelection(MainActivity.cursorPosition);
-
+        try {
+            editText.setSelection(MainActivity.cursorPosition);
+        } catch (IndexOutOfBoundsException e) {
+            editText.setSelection(editText.length());
+        }
     }
 
     public EditText getEditText() {
