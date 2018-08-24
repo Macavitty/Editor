@@ -49,17 +49,13 @@ public class LeafMatEgoFragment extends Fragment {
                     public void run() {
                         Log.d("run", "i am here");
 
-                        Tab tab = layout.getTabAt(rootFragment.getCurrentTab());
-                        String tabName = tab.getText().toString();
-                        String tabText = editText.getText().toString();
-
                         /*
                         * handling undo buffer
                         */
                         if (undoStack.size() > 0 && MainActivity.isReady) {
                             String s = undoStack.peek();
-                            if (!s.equals(tabText)) {
-                                undoStack.push(tabText);
+                            if (!s.equals(editText.getText().toString())) {
+                                undoStack.push(editText.getText().toString());
                             }
                         } else if (undoStack.size() == 0 && MainActivity.isReady)
                             undoStack.push(editText.getText().toString());
