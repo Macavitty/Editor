@@ -29,6 +29,7 @@ public class OpenFileActivity extends ListActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
+        setTheme(R.style.AppTheme);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.open);
 

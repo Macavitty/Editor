@@ -19,6 +19,7 @@ public class RootMatEgoFragment extends Fragment {
     private ViewPager pager;
     private ViewPagerAdapter adapter;
     private int currentTab;
+    private boolean isAdapterReady = true;
     private LeafMatEgoFragment leafFragment;
     private Map<Integer, Stack<String>> bufferUndoMap = new HashMap<>();
     private Map<Integer, Stack<String>> bufferRedoMap = new HashMap<>();
@@ -31,6 +32,7 @@ public class RootMatEgoFragment extends Fragment {
         layout = view.findViewById(R.id.sliding_tabs);
         adapter = new ViewPagerAdapter(getFragmentManager());
         pager.setAdapter(adapter);
+        //pager.setOffscreenPageLimit(200);
 
         layout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
@@ -39,7 +41,6 @@ public class RootMatEgoFragment extends Fragment {
                 pager.setCurrentItem(currentTab);
                 String tmp = adapter.getTitle(currentTab);
                 MainActivity.fileName = tmp.contains("/") ? tmp : "";
-                Log.e("name *", "filename: " + MainActivity.fileName + " curTab: " + currentTab);
             }
 
             @Override
@@ -54,19 +55,27 @@ public class RootMatEgoFragment extends Fragment {
         return view;
     }
 
-    public void addTab(String title, ViewPagerAdapter adapter) {
+    public void addTab(String title) {
+        isAdapterReady = false;
         leafFragment = new LeafMatEgoFragment();
         leafFragment.setUntaughtText("");
-        // leafFragment.setArguments(bundle);
-        adapter.addFrag(leafFragment, title);
-        adapter.notifyDataSetChanged();
-        layout.setupWithViewPager(pager);
-        currentTab = adapter.getCount() - 1;
-        pager.setCurrentItem(adapter.getCount() - 1);
+        ViewPagerAdapter newAdapter = new ViewPagerAdapter(getFragmentManager());
+        // old fragments
+        for (int i = 0; i < adapter.getCount(); i++) {
+            newAdapter.addFrag(adapter.getFragment(i), adapter.getTitle(i));
+            newAdapter.notifyDataSetChanged();
+        }
+        // new one
+        newAdapter.addFrag(leafFragment, title);
+        newAdapter.notifyDataSetChanged();
+
+        currentTab = newAdapter.getCount() - 1;
+        updateAdapter(newAdapter, currentTab);
+
     }
 
     public void deleteTab(int position) {
-        Log.e("*** remove", position + "");
+        isAdapterReady = false;
         ViewPagerAdapter newAdapter = new ViewPagerAdapter(getFragmentManager());
         for (int i = 0; i < adapter.getCount(); i++) {
             if (i != position) {
@@ -75,12 +84,16 @@ public class RootMatEgoFragment extends Fragment {
             }
 
         }
+        currentTab = position < newAdapter.getCount() - 1 ? position : newAdapter.getCount() - 1;
+        updateAdapter(newAdapter, currentTab);
+    }
+
+    private void updateAdapter(ViewPagerAdapter newAdapter, int position) {
         this.adapter = newAdapter;
         pager.setAdapter(newAdapter);
         layout.setupWithViewPager(pager);
-        currentTab = position < newAdapter.getCount() - 1 ? position : newAdapter.getCount()-1;
-        Log.d("curTab after remove", currentTab+"");
-        pager.setCurrentItem(currentTab);
+        pager.setCurrentItem(position);
+        isAdapterReady = true;
     }
 
     public ViewPagerAdapter getAdapter() {
@@ -93,5 +106,9 @@ public class RootMatEgoFragment extends Fragment {
 
     public TabLayout getLayout() {
         return layout;
+    }
+
+    public boolean getIsAdapterReady() {
+        return isAdapterReady;
     }
 }

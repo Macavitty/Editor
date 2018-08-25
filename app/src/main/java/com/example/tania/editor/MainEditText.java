@@ -3,6 +3,7 @@ package com.example.tania.editor;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.graphics.Rect;
 import android.util.AttributeSet;
 
 public class MainEditText extends android.support.v7.widget.AppCompatEditText {
@@ -35,6 +36,7 @@ public class MainEditText extends android.support.v7.widget.AppCompatEditText {
             canvas.drawLine(pudding + 0, 0, pudding + 0, canvas.getHeight() * getLineCount(), paint);
             findViewById(R.id.editText).setPadding(pudding + 5, 4, 4, 6);
         }
+
 
     }
 }

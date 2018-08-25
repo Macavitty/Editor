@@ -25,7 +25,6 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        Log.d("*** * getItem", position + "");
         return fragmentsList.get(position);
     }
 
@@ -46,7 +45,11 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
     }
 
     public void setPageTitle(int position, String title) { // use it after open
-        titlesList.set(position, title);
+        try {
+            titlesList.set(position, title);
+        } catch (IndexOutOfBoundsException e) {
+            e.printStackTrace();
+        }
     }
 
     public void addFrag(Fragment f, String s) {

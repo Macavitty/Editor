@@ -78,14 +78,14 @@ public class MainActivity extends AppCompatActivity {
         refreshPagerAdapter();
         tabLayout = findViewById(R.id.sliding_tabs);
 
-        rootFragment.addTab(DEFAULT_PAGE_NAME, pagerAdapter);
+        rootFragment.addTab(DEFAULT_PAGE_NAME);
 
         Button addButton = findViewById(R.id.add_button);
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 refreshPagerAdapter();
-                rootFragment.addTab(DEFAULT_PAGE_NAME, pagerAdapter);
+                rootFragment.addTab(DEFAULT_PAGE_NAME);
             }
         });
 
@@ -137,6 +137,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        refreshPagerAdapter();
         refreshLeafFragment();
         editText = leafFragment.getEditText();
         if (editText == null) cursorPosition = 0;
@@ -339,7 +340,7 @@ public class MainActivity extends AppCompatActivity {
             saveDialog.setPositiveButton(getString(R.string.dlg_positive), new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    if (pagerAdapter.getTitle(currentTab).equals(DEFAULT_PAGE_NAME)) {
+                    if (pagerAdapter.getTitle(currentTab).equals(DEFAULT_PAGE_NAME) || pagerAdapter.getTitle(currentTab).contains("\u2739 ")) {
                         // ПОРЯДОК ВАЖЕН !
                         startActivity(intent);
                         goToSaveAs();
@@ -347,8 +348,6 @@ public class MainActivity extends AppCompatActivity {
                         saveFile(false);
                         startActivity(intent);
                     }
-
-
                 }
             });
 

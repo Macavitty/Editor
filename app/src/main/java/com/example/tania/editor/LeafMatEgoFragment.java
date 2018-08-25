@@ -22,8 +22,8 @@ import java.util.Stack;
 public class LeafMatEgoFragment extends Fragment {
 
     private EditText editText;
-    private String editStr = "";
     private RootMatEgoFragment rootFragment;
+    private ViewPagerAdapter adapter;
     private Deque<String> undoStack;
     private Deque<String> redoStack;
 
@@ -37,6 +37,7 @@ public class LeafMatEgoFragment extends Fragment {
         undoStack = new ArrayDeque<>();
         redoStack = new ArrayDeque<>();
         rootFragment = (RootMatEgoFragment) getActivity().getSupportFragmentManager().findFragmentById(R.id.boss_fragment);
+        adapter = rootFragment.getAdapter();
         final TabLayout layout = rootFragment.getLayout();
         editText.addTextChangedListener(new TextWatcher() {
             final Handler handler = new Handler();
@@ -50,8 +51,9 @@ public class LeafMatEgoFragment extends Fragment {
                         Log.d("run", "i am here");
 
                         /*
-                        * handling undo buffer
-                        */
+                         * handling undo buffer
+                         */
+
                         if (undoStack.size() > 0 && MainActivity.isReady) {
                             String s = undoStack.peek();
                             if (!s.equals(editText.getText().toString())) {
@@ -71,21 +73,41 @@ public class LeafMatEgoFragment extends Fragment {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 handler.removeCallbacks(runnable);
-                Tab tab = layout.getTabAt(rootFragment.getCurrentTab());
-                String tabName = tab.getText().toString();
-                String tabText = editText.getText().toString();
+                if (rootFragment.getIsAdapterReady()) {
+                    try { // нехай буде
+                        Tab tab = layout.getTabAt(rootFragment.getCurrentTab());
+                        Log.e("current tab is", rootFragment.getCurrentTab() + "");
+                        String tabName = tab.getText().toString();
+                        String tabText = editText.getText().toString();
+                        String sunSymbol = "\u2742 ";
 
-                /*
-                 * handling '*' in tab name
-                 * с надеждой, что никому не захочется назвать свой файл "* "
-                 */
+                        /*
+                         * handling sunSymbol in tab name
+                         */
 
-                if (!untaughtText.equals(tabText)
-                        && !tabName.startsWith("* ")) tab.setText("* " + tabName);
-                else if (untaughtText.equals(tabText)
-                        && tabName.startsWith("* ")) tab.setText(tabName.substring(1, tabName.length()));
+                        if (!untaughtText.equals(tabText)
+                                && !tabName.startsWith(sunSymbol)) {
+                            tab.setText(sunSymbol + tabName);
+                            adapter = rootFragment.getAdapter();
+                            adapter.setPageTitle(rootFragment.getCurrentTab(), sunSymbol + tabName);
+                            for (int i = 0; i < adapter.getCount(); i++) {
+                                Log.e("change title", adapter.getPageTitle(i) + "");
+                            }
+                        } else if (untaughtText.equals(tabText)
+                                && tabName.startsWith(sunSymbol)) {
+                            tab.setText(tabName.substring(1, tabName.length()));
+                            adapter = rootFragment.getAdapter();
+                            adapter.setPageTitle(rootFragment.getCurrentTab(), tabName.substring(1, tabName.length()));
+                            for (int i = 0; i < adapter.getCount(); i++) {
+                                Log.e("change title", adapter.getPageTitle(i) + "");
+                            }
+                        }
 
 
+                    } catch (NullPointerException e) {
+                        e.printStackTrace();
+                    }
+                }
             }
         });
 
