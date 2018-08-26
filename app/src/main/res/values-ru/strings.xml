@@ -52,6 +52,8 @@
     <string name="pref_first_litera_summary">Делать первую букву предложения заглавной</string>
     <string name="pref_numeration">Нумерация строк</string>
     <string name="pref_language">Язык</string>
+    <string name="pref_highlighting">Подсветка</string>
+    <string name="pref_highlighting_summ">Подсвечивать текущую строку</string>
 
     <string name="msg_file_saved">Всё норм, файл сохранён</string>
     <string name="msg_file_not_saved">Увы, не получилось</string>

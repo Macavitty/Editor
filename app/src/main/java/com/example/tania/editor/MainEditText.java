@@ -4,13 +4,19 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.text.Layout;
+import android.text.Selection;
 import android.util.AttributeSet;
+import android.util.Log;
 
 public class MainEditText extends android.support.v7.widget.AppCompatEditText {
 
-    Paint paint = new Paint();
+    private Paint paintNumbers = new Paint();
+    private Paint paintHighlight = new Paint();
+    private Rect bounds = new Rect();
     public static boolean isNumbersNeeded = false;
-    int pudding = 100;
+    public static boolean isHighlightingNeeded = false;
+    private int pudding = 100;
 
     public MainEditText(Context context, AttributeSet attributeSet) {
         super(context, attributeSet);
@@ -18,25 +24,44 @@ public class MainEditText extends android.support.v7.widget.AppCompatEditText {
 
     @Override
     protected void onDraw(Canvas canvas) {
-        super.onDraw(canvas);
+
+        /*
+         * setting numbers
+         */
         if (isNumbersNeeded) {
             int baseLine = getBaseline();
-            paint.setTextSize(MainActivity.textSize - 2);
-            paint.setColor(getResources().getColor(R.color.numeration));
+            paintNumbers.setTextSize(MainActivity.textSize - 2);
+            paintNumbers.setColor(getResources().getColor(R.color.numeration));
             for (int i = 0; i < getLineCount(); i++) {
-                canvas.drawText(i + "", 5, baseLine, paint);
+                canvas.drawText(i + "", 5, baseLine, paintNumbers);
                 baseLine += getLineHeight();
             }
-            if (getLineCount() < 10)
+            if (getLineCount() < 10) {
                 pudding = (int) ((MainActivity.textSize - 1) * 1.2);
-            else if (getLineCount() < 100) {
+            } else if (getLineCount() < 100) {
                 pudding = (int) ((MainActivity.textSize - 1) * 1.7);
-            } else
+            } else {
                 pudding = (int) ((MainActivity.textSize - 1) * 2);
-            canvas.drawLine(pudding + 0, 0, pudding + 0, canvas.getHeight() * getLineCount(), paint);
+            }
+            canvas.drawLine(pudding + 0, 0, pudding + 0, canvas.getHeight() * getLineCount(), paintNumbers);
             findViewById(R.id.editText).setPadding(pudding + 5, 4, 4, 6);
         }
 
+        /*
+         * highlighting current line
+         */
+        if (isHighlightingNeeded) {
+            paintHighlight.setColor(getResources().getColor(R.color.line_highlighting));
+            int lineNumber = 0;
+            try {
+                lineNumber = getLayout().getLineForOffset(getSelectionStart());
+            } catch (NullPointerException e) {
+                e.printStackTrace();
+            }
+            getLineBounds(lineNumber, bounds);
+            canvas.drawRect(bounds, paintHighlight);
+        }
 
+        super.onDraw(canvas);
     }
 }

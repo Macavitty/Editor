@@ -5,14 +5,19 @@
     <color name="background_material_light">#fde7bf</color>
     <color name="colorAccent">#1e7902</color>
     <color name="background">#fde7bf</color>
+
     <color name="colorSelectedText">#fbfcf9</color>
     <color name="colorNotSelectedText">#02250a</color>
     <color name="colorSelectedBackground">#fac2a8</color>
+
     <color name="bottom_bar">#ce6b3d</color>
     <color name="header">#ce6b3d</color>
-    <color name="numeration">#fb647452</color>
     <color name="tab_layout">#ce6b3d</color>
     <color name="tab_text">#f7c8b1</color>
+    <color name="indicator">#f7c8b1</color>
+
+    <color name="numeration">#fb647452</color>
+    <color name="line_highlighting">#5bfbfcd5</color>
 
     <color name="myCorral">#fb647452</color>
     <color name="myGrey">#fbc7d2ba</color>
@@ -27,8 +32,6 @@
     <color name="myGreen">#fbc5fa62</color>
     <color name="myPink">#fda6ca</color>
     <color name="myNavy">#140586</color>
-
-    <color name="indicator">#f7c8b1</color>
 
     <color name="transparent">#01c8fa6b</color>
 

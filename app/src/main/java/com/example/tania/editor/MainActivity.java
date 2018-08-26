@@ -289,6 +289,10 @@ public class MainActivity extends AppCompatActivity {
             MainEditText.isNumbersNeeded = true;
         } else MainEditText.isNumbersNeeded = false;
 
+        if (sp.getBoolean(getString(R.string.pref_highlighting), false)) {
+            MainEditText.isHighlightingNeeded = true;
+        } else MainEditText.isHighlightingNeeded = false;
+
         //After OpenFileActivity  //
         if (goToOpen) {
             goToOpen = false;
@@ -301,7 +305,9 @@ public class MainActivity extends AppCompatActivity {
         }
 
         //  After SaveAsActivity  //
-        else if (goToSaveAs) {
+        else if (goToSaveAs)
+
+        {
             goToSaveAs = false;
             if (!canceled) {
                 if (!fileName.equals("")) saveFile(true);

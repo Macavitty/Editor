@@ -50,6 +50,8 @@
     <string name="pref_first_litera_summary">Capitalize the first word of each sentence</string>
     <string name="pref_numeration">Enumeration</string>
     <string name="pref_language">Language</string>
+    <string name="pref_highlighting">Highlighting</string>
+    <string name="pref_highlighting_summ">Highlight the current line</string>
 
     <string name="msg_file_saved">It`s OK, saved</string>
     <string name="msg_file_not_saved">Alas, failed</string>
