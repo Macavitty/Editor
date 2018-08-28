@@ -37,7 +37,6 @@
             android:layout_weight="2"
             style="@style/Base.Widget.AppCompat.Spinner.Underlined"
             >
-
         </Spinner>
     </LinearLayout>
 

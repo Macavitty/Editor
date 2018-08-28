@@ -58,12 +58,11 @@ public class SaveAsActivity extends ListActivity {
 
         userFileName = findViewById(R.id.user_file_name);
 
-
         cancelButton.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View v) {
                 localFileName = "";
-                MainActivity.canceled = true;
+                MainActivity.isSavingCanceled = true;
                 SaveAsActivity.super.onBackPressed();
             }
         });
@@ -94,6 +93,7 @@ public class SaveAsActivity extends ListActivity {
                                         extension = spinner.getSelectedItem().toString();
                                         MainActivity.newFile = userFileName.getText().toString() + extension;
                                         MainActivity.fileName = tmpDirectory + "/" + MainActivity.newFile;
+                                        MainActivity.userInput = tmpDirectory + "/" + MainActivity.newFile; //
                                         new File(tmpDirectory, MainActivity.newFile);
                                         SaveAsActivity.super.onBackPressed();
 

@@ -44,7 +44,7 @@ public class OpenFileActivity extends ListActivity {
             @Override
             public void onClick(View v) {
                 localFileName = "";
-                MainActivity.canceled = true;
+                MainActivity.isOpeningCanceled = true;
                 OpenFileActivity.super.onBackPressed();
             }
         });
@@ -53,7 +53,7 @@ public class OpenFileActivity extends ListActivity {
             @Override
             public void onClick(View v) {
                 if (localFileName.equals(""))
-                    Toast.makeText(getApplicationContext(), getString(R.string.msg_choose_file), Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), getString(R.string.msg_choose_file), Toast.LENGTH_SHORT).show();
                 else {
                     MainActivity.fileName = localFileName;
                     OpenFileActivity.super.onBackPressed();

@@ -76,7 +76,6 @@ public class LeafMatEgoFragment extends Fragment {
                 if (rootFragment.getIsAdapterReady()) {
                     try { // нехай буде
                         Tab tab = layout.getTabAt(rootFragment.getCurrentTab());
-                        Log.e("current tab is", rootFragment.getCurrentTab() + "");
                         String tabName = tab.getText().toString();
                         String tabText = editText.getText().toString();
                         String sunSymbol = "\u2742 ";
@@ -90,17 +89,11 @@ public class LeafMatEgoFragment extends Fragment {
                             tab.setText(sunSymbol + tabName);
                             adapter = rootFragment.getAdapter();
                             adapter.setPageTitle(rootFragment.getCurrentTab(), sunSymbol + tabName);
-                            for (int i = 0; i < adapter.getCount(); i++) {
-                                Log.e("change title", adapter.getPageTitle(i) + "");
-                            }
                         } else if (untaughtText.equals(tabText)
                                 && tabName.startsWith(sunSymbol)) {
                             tab.setText(tabName.substring(1, tabName.length()));
                             adapter = rootFragment.getAdapter();
                             adapter.setPageTitle(rootFragment.getCurrentTab(), tabName.substring(1, tabName.length()));
-                            for (int i = 0; i < adapter.getCount(); i++) {
-                                Log.e("change title", adapter.getPageTitle(i) + "");
-                            }
                         }
 
 
@@ -110,7 +103,6 @@ public class LeafMatEgoFragment extends Fragment {
                 }
             }
         });
-
         return view;
     }
 

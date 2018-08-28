@@ -50,7 +50,7 @@
 
     <string-array name="extension">
         <item>.txt</item>
-        <item>.log</item>
+        <item>.text</item>
     </string-array>
 
 </resources>

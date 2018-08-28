@@ -1,17 +1,13 @@
 package com.example.tania.editor;
 
-import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -58,9 +54,16 @@ public class MainActivity extends AppCompatActivity {
     static float textSize;
     static boolean capLitera = false;
     static boolean isReady = true; // kostyl for handling textChangesListener
-    static boolean canceled = false;
     static String fileName = "", directory = "", newFile = "";
+    static String userInput = ""; // user`s filename
     static Typeface typefaceFont = Typeface.DEFAULT;
+
+    // they are for correct resuming
+    private boolean openActivityWasCalled = false;
+    private boolean saveAsActivityWasCalled = false;
+    private boolean openAndSaveAsActivitiesWereCalled = false;
+    static boolean isSavingCanceled = false;
+    static boolean isOpeningCanceled = false;
 
     //    int permissionWriteStatus = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
 //    int permissionReadStatus = ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE);
@@ -107,9 +110,9 @@ public class MainActivity extends AppCompatActivity {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 if (pagerAdapter.getTitle(CURRENT_TAB).equals(DEFAULT_PAGE_NAME))
-                                    goToSaveAs();
+                                    goToSaveAsActivity();
                                 else
-                                    saveFile(false);
+                                    saveFile(fileName,false);
                                 rootFragment.deleteTab(CURRENT_TAB);
                             }
                         });
@@ -147,21 +150,17 @@ public class MainActivity extends AppCompatActivity {
         switch (item.getItemId()) {
 
             case R.id.action_save:
-                if (!fileName.equals("")) saveFile(true);
-                else {
-                    //saveTextToBuffer();
-                    goToSaveAs();
-                }
+                if (!fileName.equals("")) saveFile(fileName, true);
+                else
+                    goToSaveAsActivity();
                 return true;
 
             case R.id.action_save_as:
-                //saveTextToBuffer();
-                goToSaveAs();
+                goToSaveAsActivity();
                 return true;
 
             case R.id.action_open:
-                goToOpen();
-                //saveTextToBuffer();
+                goToOpenActivity();
                 return true;
 
             case R.id.action_settings:
@@ -178,10 +177,8 @@ public class MainActivity extends AppCompatActivity {
                 undoStack = leafFragment.getUndoStack();
                 redoStack = leafFragment.getRedoStack();
                 if (undoStack.size() > 0) {
-                    Log.d("undo", Arrays.deepToString(undoStack.toArray()));
                     if (!undoStack.peek().equals(redoStack.peek()))
                         redoStack.push(undoStack.pop());
-                    Log.d("redo", Arrays.deepToString(redoStack.toArray()));
                     editText.setText(undoStack.peek());
                     try {
                         editText.setSelection(cursorPosition);
@@ -229,7 +226,6 @@ public class MainActivity extends AppCompatActivity {
         textSize = Float.parseFloat(sp.getString(getString(R.string.pref_size), "20"));
         if (textSize < 10) textSize = 10;
         else if (textSize > 600) textSize = 600;
-
 
         String type = sp.getString(getString(R.string.pref_style), "");
         String srift = sp.getString(getString(R.string.pref_srift), "");
@@ -281,59 +277,52 @@ public class MainActivity extends AppCompatActivity {
         if (color.contains(getString(R.string.pref_color_navy)))
             backgroundColor = ContextCompat.getColor(this, R.color.myNavy);
 
-        if (sp.getBoolean(getString(R.string.pref_first_litera), false)) // work please
-            capLitera = true;
-        else capLitera = false;
+        // work please
+        capLitera = sp.getBoolean(getString(R.string.pref_first_litera), false);
+        MainEditText.isNumbersNeeded = sp.getBoolean(getString(R.string.pref_numeration), false);
+        MainEditText.isHighlightingNeeded = sp.getBoolean(getString(R.string.pref_highlighting), false);
 
-        if (sp.getBoolean(getString(R.string.pref_numeration), false)) {// work please
-            MainEditText.isNumbersNeeded = true;
-        } else MainEditText.isNumbersNeeded = false;
+        if (openAndSaveAsActivitiesWereCalled) {
+            saveAsActivityWasCalled = false; // про всяк випадок
+            openAndSaveAsActivitiesWereCalled = false;
+            if (!isSavingCanceled)
+                saveFile(userInput, false);
+            else
+                isSavingCanceled = false;
+            if (!isOpeningCanceled)
+                openFile(false);
+            else
+                isOpeningCanceled = false;
+        }
 
-        if (sp.getBoolean(getString(R.string.pref_highlighting), false)) {
-            MainEditText.isHighlightingNeeded = true;
-        } else MainEditText.isHighlightingNeeded = false;
-
-        //After OpenFileActivity  //
-        if (goToOpen) {
-            goToOpen = false;
-            if (!canceled) {
+        else if (openActivityWasCalled) {
+            openActivityWasCalled = false;
+            if (!isOpeningCanceled) {
                 if (!fileName.equals("")) openFile(false);
-            } else {
-                canceled = false;
-                //textFromBufferIsNeeded = true;
-            }
+            } else
+                isOpeningCanceled = false;
         }
 
-        //  After SaveAsActivity  //
-        else if (goToSaveAs)
-
-        {
-            goToSaveAs = false;
-            if (!canceled) {
-                if (!fileName.equals("")) saveFile(true);
-            } else {
-                canceled = false;
-                //textFromBufferIsNeeded = true;
-            }
+        else if (saveAsActivityWasCalled) {
+            saveAsActivityWasCalled = false;
+            if (!isSavingCanceled) {
+                if (!fileName.equals("")) saveFile(fileName, true);
+            } else
+                isSavingCanceled = false;
         }
-        //else openFile();
-
     }
 
-    private void goToSaveAs() {
-        goToSaveAs = true;
+    private void goToSaveAsActivity() {
+        saveAsActivityWasCalled = true;
         Intent intent = new Intent();
         intent.setClass(this, SaveAsActivity.class);
         startActivity(intent);
     }
 
-    private void goToOpen() {
-
+    private void goToOpenActivity() {
         final String DEFAULT_PAGE_NAME = this.getString(R.string.default_file_name);
-        goToOpen = true;
         final Intent intent = new Intent();
         intent.setClass(this, OpenFileActivity.class);
-
         final int currentTab = rootFragment.getCurrentTab();
         refreshPagerAdapter();
         refreshLeafFragment();
@@ -346,12 +335,14 @@ public class MainActivity extends AppCompatActivity {
             saveDialog.setPositiveButton(getString(R.string.dlg_positive), new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    if (pagerAdapter.getTitle(currentTab).equals(DEFAULT_PAGE_NAME) || pagerAdapter.getTitle(currentTab).contains("\u2739 ")) {
+                    if (pagerAdapter.getTitle(currentTab).equals("\u2742 " + DEFAULT_PAGE_NAME)) {
                         // ПОРЯДОК ВАЖЕН !
+                        openAndSaveAsActivitiesWereCalled = true;
                         startActivity(intent);
-                        goToSaveAs();
+                        goToSaveAsActivity();
                     } else {
-                        saveFile(false);
+                        openActivityWasCalled = true;
+                        saveFile(fileName, true);
                         startActivity(intent);
                     }
                 }
@@ -360,26 +351,23 @@ public class MainActivity extends AppCompatActivity {
             saveDialog.setNegativeButton(getString(R.string.dlg_negative), new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
+                    openActivityWasCalled = true;
                     startActivity(intent);
-
                 }
             });
             saveDialog.show();
-        } else
+        } else {
+            openActivityWasCalled = true;
             startActivity(intent);
+        }
     }
 
-
-    /*
-     * it don`t updates text in others tabs with the same file opened
-     * (but should it?)*/
-    private void saveFile(boolean needToOpenFile) {
+    private void saveFile(String name, boolean needToOpenFile) {
         refreshPagerAdapter();
         refreshLeafFragment();
         editText = leafFragment.getEditText();
-
         try {
-            FileOutputStream outputStream = new FileOutputStream(fileName);
+            FileOutputStream outputStream = new FileOutputStream(name);
             OutputStreamWriter out = new OutputStreamWriter(outputStream);
             out.write(editText.getText().toString());
             out.close();
