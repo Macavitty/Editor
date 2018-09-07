@@ -91,10 +91,10 @@ public class SaveAsActivity extends ListActivity {
                                     public void onClick(DialogInterface dialog, int id) {
                                         userFileName.setText(userText.getText().toString().equals("") ? getString(R.string.unnamed_file) : userText.getText());
                                         extension = spinner.getSelectedItem().toString();
-                                        MainActivity.newFile = userFileName.getText().toString() + extension;
-                                        MainActivity.fileName = tmpDirectory + "/" + MainActivity.newFile;
-                                        MainActivity.userInput = tmpDirectory + "/" + MainActivity.newFile; //
-                                        new File(tmpDirectory, MainActivity.newFile);
+                                        String cutPath = userFileName.getText().toString() + extension;
+                                        MainActivity.path = tmpDirectory + "/" + cutPath;
+                                        MainActivity.userInput = tmpDirectory + "/" + cutPath; //
+                                        new File(tmpDirectory, cutPath);
                                         SaveAsActivity.super.onBackPressed();
 
                                     }
@@ -118,7 +118,7 @@ public class SaveAsActivity extends ListActivity {
                 if (localFileName.equals(""))
                     Toast.makeText(getApplicationContext(), getString(R.string.msg_choose_file), Toast.LENGTH_LONG).show();
                 else {
-                    MainActivity.fileName = localFileName;
+                    MainActivity.userInput = localFileName;
                     SaveAsActivity.super.onBackPressed();
                 }
             }

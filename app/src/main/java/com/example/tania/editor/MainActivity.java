@@ -55,8 +55,11 @@ public class MainActivity extends AppCompatActivity {
     static boolean capLitera = false;
     static boolean isReady = true; // kostyl for handling textChangesListener
     static String fileName = "", directory = "", newFile = "";
-    static String userInput = ""; // user`s filename
     static Typeface typefaceFont = Typeface.DEFAULT;
+
+    static String userInput = ""; // user`s filename
+    static String path = "", tabTitle = "", choosenFile = "";
+    static String fileToRewrite = "";
 
     // they are for correct resuming
     private boolean openActivityWasCalled = false;
@@ -112,7 +115,7 @@ public class MainActivity extends AppCompatActivity {
                                 if (pagerAdapter.getTitle(CURRENT_TAB).equals(DEFAULT_PAGE_NAME))
                                     goToSaveAsActivity();
                                 else
-                                    saveFile(fileName,false);
+                                    saveFile(pagerAdapter.getPath(CURRENT_TAB),false);
                                 rootFragment.deleteTab(CURRENT_TAB);
                             }
                         });
@@ -150,7 +153,8 @@ public class MainActivity extends AppCompatActivity {
         switch (item.getItemId()) {
 
             case R.id.action_save:
-                if (!fileName.equals("")) saveFile(fileName, true);
+                if (!pagerAdapter.getPath(rootFragment.getCurrentTab()).equals(""))
+                    saveFile(pagerAdapter.getPath(rootFragment.getCurrentTab()), true);
                 else
                     goToSaveAsActivity();
                 return true;
@@ -290,7 +294,7 @@ public class MainActivity extends AppCompatActivity {
             else
                 isSavingCanceled = false;
             if (!isOpeningCanceled)
-                openFile(false);
+                openFile(choosenFile, false);
             else
                 isOpeningCanceled = false;
         }
@@ -298,7 +302,7 @@ public class MainActivity extends AppCompatActivity {
         else if (openActivityWasCalled) {
             openActivityWasCalled = false;
             if (!isOpeningCanceled) {
-                if (!fileName.equals("")) openFile(false);
+                if (!choosenFile.equals("")) openFile(choosenFile, false);
             } else
                 isOpeningCanceled = false;
         }
@@ -306,7 +310,7 @@ public class MainActivity extends AppCompatActivity {
         else if (saveAsActivityWasCalled) {
             saveAsActivityWasCalled = false;
             if (!isSavingCanceled) {
-                if (!fileName.equals("")) saveFile(fileName, true);
+                if (!userInput.equals("")) saveFile(userInput, true);
             } else
                 isSavingCanceled = false;
         }
@@ -342,7 +346,7 @@ public class MainActivity extends AppCompatActivity {
                         goToSaveAsActivity();
                     } else {
                         openActivityWasCalled = true;
-                        saveFile(fileName, true);
+                        saveFile(pagerAdapter.getPath(currentTab), true);
                         startActivity(intent);
                     }
                 }
@@ -372,14 +376,14 @@ public class MainActivity extends AppCompatActivity {
             out.write(editText.getText().toString());
             out.close();
             Toast.makeText(getApplicationContext(), getString(R.string.msg_file_saved), Toast.LENGTH_SHORT).show();
-            if (needToOpenFile) openFile(true);
+            if (needToOpenFile) openFile(name,true);
         } catch (IOException e) {
             Toast.makeText(getApplicationContext(), getString(R.string.msg_file_not_saved), Toast.LENGTH_SHORT).show();
             e.printStackTrace();
         }
     }
 
-    private void openFile(boolean blef) {
+    private void openFile(String file, boolean blef) {
         refreshPagerAdapter();
         refreshLeafFragment();
         editText = leafFragment.getEditText();
@@ -387,7 +391,7 @@ public class MainActivity extends AppCompatActivity {
         try {
 
             //InputStream inputStream = openFileInput(file); // for internal
-            FileInputStream inputStream = new FileInputStream(new File(fileName));
+            FileInputStream inputStream = new FileInputStream(new File(file));
             InputStreamReader isr = new InputStreamReader(inputStream);
             BufferedReader reader = new BufferedReader(isr);
             String line;
@@ -398,11 +402,12 @@ public class MainActivity extends AppCompatActivity {
             }
             inputStream.close();
 
-            title = fileName.substring(fileName.lastIndexOf("/") + 1, fileName.length());
+            title = file.substring(file.lastIndexOf("/") + 1, file.length());
             editText.setText(builder.toString());
             leafFragment.setUntaughtText(builder.toString());
             refreshPagerAdapter();
-            pagerAdapter.setPageTitle(rootFragment.getCurrentTab(), fileName);
+            pagerAdapter.setPageTitle(rootFragment.getCurrentTab(), title);
+            pagerAdapter.setPath(rootFragment.getCurrentTab(), file);
             tabLayout.getTabAt(rootFragment.getCurrentTab()).setText(title);
             if (!blef) {
                 leafFragment.setUndoStack(new ArrayDeque<String>());

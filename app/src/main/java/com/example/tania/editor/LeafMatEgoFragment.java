@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 
 import java.util.ArrayDeque;
+import java.util.Arrays;
 import java.util.Deque;
 import java.util.Stack;
 
@@ -48,8 +49,6 @@ public class LeafMatEgoFragment extends Fragment {
                 runnable = new Runnable() {
                     @Override
                     public void run() {
-                        Log.d("run", "i am here");
-
                         /*
                          * handling undo buffer
                          */
@@ -58,6 +57,7 @@ public class LeafMatEgoFragment extends Fragment {
                             String s = undoStack.peek();
                             if (!s.equals(editText.getText().toString())) {
                                 undoStack.push(editText.getText().toString());
+                                Log.e("stack", Arrays.deepToString(undoStack.toArray()));
                             }
                         } else if (undoStack.size() == 0 && MainActivity.isReady)
                             undoStack.push(editText.getText().toString());

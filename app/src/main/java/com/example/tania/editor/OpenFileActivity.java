@@ -55,7 +55,7 @@ public class OpenFileActivity extends ListActivity {
                 if (localFileName.equals(""))
                     Toast.makeText(getApplicationContext(), getString(R.string.msg_choose_file), Toast.LENGTH_SHORT).show();
                 else {
-                    MainActivity.fileName = localFileName;
+                    MainActivity.choosenFile = localFileName;
                     OpenFileActivity.super.onBackPressed();
                 }
             }

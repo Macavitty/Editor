@@ -62,11 +62,11 @@ public class RootMatEgoFragment extends Fragment {
         ViewPagerAdapter newAdapter = new ViewPagerAdapter(getFragmentManager());
         // old fragments
         for (int i = 0; i < adapter.getCount(); i++) {
-            newAdapter.addFrag(adapter.getFragment(i), adapter.getTitle(i));
+            newAdapter.addFrag(adapter.getFragment(i), adapter.getTitle(i), adapter.getPath(i));
             newAdapter.notifyDataSetChanged();
         }
         // new one
-        newAdapter.addFrag(leafFragment, title);
+        newAdapter.addFrag(leafFragment, title, "");
         newAdapter.notifyDataSetChanged();
 
         currentTab = newAdapter.getCount() - 1;
@@ -79,7 +79,7 @@ public class RootMatEgoFragment extends Fragment {
         ViewPagerAdapter newAdapter = new ViewPagerAdapter(getFragmentManager());
         for (int i = 0; i < adapter.getCount(); i++) {
             if (i != position) {
-                newAdapter.addFrag(adapter.getFragment(i), adapter.getTitle(i));
+                newAdapter.addFrag(adapter.getFragment(i), adapter.getTitle(i), adapter.getPath(i));
                 newAdapter.notifyDataSetChanged();
             }
 

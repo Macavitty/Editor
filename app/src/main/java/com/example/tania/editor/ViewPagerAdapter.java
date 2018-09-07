@@ -18,6 +18,7 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
 
     private ArrayList<Fragment> fragmentsList = new ArrayList<>();
     private ArrayList<String> titlesList = new ArrayList<>();
+    private ArrayList<String> pathsList = new ArrayList<>();
 
     public ViewPagerAdapter(FragmentManager manager) {
         super(manager);
@@ -52,9 +53,18 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
         }
     }
 
-    public void addFrag(Fragment f, String s) {
+    public void setPath(int position, String path) {
+        try {
+            pathsList.set(position, path);
+        } catch (IndexOutOfBoundsException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void addFrag(Fragment f, String title, String path) {
         fragmentsList.add(f);
-        titlesList.add(s);
+        titlesList.add(title);
+        pathsList.add(path);
     }
 
     public Fragment getFragment(int position) {
@@ -63,6 +73,10 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
 
     public String getTitle(int position) {
         return titlesList.get(position);
+    }
+
+    public String getPath(int position) {
+        return pathsList.get(position);
     }
 }
 
