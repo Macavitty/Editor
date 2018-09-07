@@ -63,7 +63,7 @@ public class LeafMatEgoFragment extends Fragment {
                             undoStack.push(editText.getText().toString());
                     }
                 };
-                handler.postDelayed(runnable, 500);
+                handler.postDelayed(runnable, 249);
             }
 
             @Override

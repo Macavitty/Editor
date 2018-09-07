@@ -40,9 +40,6 @@ public class MainActivity extends AppCompatActivity {
     private RootMatEgoFragment rootFragment;
     private LeafMatEgoFragment leafFragment;
 
-    private boolean goToOpen = false;
-    private boolean goToSaveAs = false;
-
     private String buffer = ""; // make it private at the end
     private Deque<String> undoStack;
     private Deque<String> redoStack;
@@ -54,12 +51,11 @@ public class MainActivity extends AppCompatActivity {
     static float textSize;
     static boolean capLitera = false;
     static boolean isReady = true; // kostyl for handling textChangesListener
-    static String fileName = "", directory = "", newFile = "";
+    static String fileName = "";
     static Typeface typefaceFont = Typeface.DEFAULT;
 
     static String userInput = ""; // user`s filename
     static String path = "", tabTitle = "", choosenFile = "";
-    static String fileToRewrite = "";
 
     // they are for correct resuming
     private boolean openActivityWasCalled = false;
@@ -112,7 +108,7 @@ public class MainActivity extends AppCompatActivity {
                         saveDialog.setPositiveButton(getString(R.string.dlg_positive), new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                if (pagerAdapter.getTitle(CURRENT_TAB).equals(DEFAULT_PAGE_NAME))
+                                if (pagerAdapter.getTitle(CURRENT_TAB).equals(DEFAULT_PAGE_NAME) || pagerAdapter.getTitle(CURRENT_TAB).equals("\u2742 " + DEFAULT_PAGE_NAME))
                                     goToSaveAsActivity();
                                 else
                                     saveFile(pagerAdapter.getPath(CURRENT_TAB),false);
@@ -181,8 +177,9 @@ public class MainActivity extends AppCompatActivity {
                 undoStack = leafFragment.getUndoStack();
                 redoStack = leafFragment.getRedoStack();
                 if (undoStack.size() > 0) {
-                    if (!undoStack.peek().equals(redoStack.peek()))
+                    if (!undoStack.peek().equals(redoStack.peek())){
                         redoStack.push(undoStack.pop());
+                    }
                     editText.setText(undoStack.peek());
                     try {
                         editText.setSelection(cursorPosition);
@@ -200,10 +197,18 @@ public class MainActivity extends AppCompatActivity {
                 undoStack = leafFragment.getUndoStack();
                 redoStack = leafFragment.getRedoStack();
                 if (redoStack.size() > 0) {
-                    if (editText.getText().toString().equals(redoStack.peek())) redoStack.pop();
-                    if (redoStack.size() > 0) editText.setText(redoStack.pop());
+                    int setOff = cursorPosition;
+                    if (editText.getText().toString().equals(redoStack.peek())) {
+                        redoStack.pop();
+                    }
+                    if (redoStack.size() > 0){
+                        int firstL = redoStack.peek().length();
+                        editText.setText(redoStack.pop());
+                        int secondL = redoStack.peek() == null  ? 0 : redoStack.peek().length();
+                        setOff += firstL - secondL;
+                    }
                     try {
-                        editText.setSelection(cursorPosition);
+                        editText.setSelection(setOff);
                     } catch (IndexOutOfBoundsException e) {
                         editText.setSelection(editText.length());
                     }
@@ -339,7 +344,8 @@ public class MainActivity extends AppCompatActivity {
             saveDialog.setPositiveButton(getString(R.string.dlg_positive), new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    if (pagerAdapter.getTitle(currentTab).equals("\u2742 " + DEFAULT_PAGE_NAME)) {
+                    if (pagerAdapter.getTitle(currentTab).equals("\u2742 " + DEFAULT_PAGE_NAME)
+                            || pagerAdapter.getTitle(currentTab).equals("\u2742 " + " " + DEFAULT_PAGE_NAME)) {
                         // ПОРЯДОК ВАЖЕН !
                         openAndSaveAsActivitiesWereCalled = true;
                         startActivity(intent);

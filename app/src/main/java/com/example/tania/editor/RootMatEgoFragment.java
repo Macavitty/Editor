@@ -21,8 +21,6 @@ public class RootMatEgoFragment extends Fragment {
     private int currentTab;
     private boolean isAdapterReady = true;
     private LeafMatEgoFragment leafFragment;
-    private Map<Integer, Stack<String>> bufferUndoMap = new HashMap<>();
-    private Map<Integer, Stack<String>> bufferRedoMap = new HashMap<>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -39,8 +37,8 @@ public class RootMatEgoFragment extends Fragment {
             public void onTabSelected(TabLayout.Tab tab) {
                 currentTab = tab.getPosition();
                 pager.setCurrentItem(currentTab);
-                String tmp = adapter.getTitle(currentTab);
-                MainActivity.fileName = tmp.contains("/") ? tmp : "";
+                //String tmp = adapter.getTitle(currentTab);
+                //MainActivity.fileName = tmp.contains("/") ? tmp : "";
             }
 
             @Override
@@ -71,7 +69,6 @@ public class RootMatEgoFragment extends Fragment {
 
         currentTab = newAdapter.getCount() - 1;
         updateAdapter(newAdapter, currentTab);
-
     }
 
     public void deleteTab(int position) {
@@ -82,7 +79,6 @@ public class RootMatEgoFragment extends Fragment {
                 newAdapter.addFrag(adapter.getFragment(i), adapter.getTitle(i), adapter.getPath(i));
                 newAdapter.notifyDataSetChanged();
             }
-
         }
         currentTab = position < newAdapter.getCount() - 1 ? position : newAdapter.getCount() - 1;
         updateAdapter(newAdapter, currentTab);
