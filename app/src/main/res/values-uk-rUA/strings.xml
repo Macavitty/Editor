@@ -1,6 +1,7 @@
 <resources>
 
     <string name="app_name">TextEditor</string>
+    <string name="title_activity_settings">Налаштування</string>
     <string name="action_save">Зберегти</string>
     <string name="action_open">Відкрити</string>
     <string name="action_save_as">Зберегти як</string>
@@ -48,6 +49,8 @@
     <string name="pref_first_litera">Велика літера</string>
     <string name="pref_first_litera_summary">Робити першу літеру речення великою</string>
     <string name="pref_numeration">Нумерація рядків</string>
+    <string name="pref_start_numeration">Початок нумерації</string>
+    <string name="pref_start_numeration_summary">Почати нумерацію з 0</string>
     <string name="pref_language">Мова</string>
     <string name="pref_highlighting">Підсвічування</string>
     <string name="pref_highlighting_summ">Підсвічувати поточний рядок</string>

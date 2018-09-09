@@ -1,8 +1,7 @@
 <resources>
 
-    <string name="dlg_choose_file_name">Как файл назовём?</string>
-
     <string name="app_name">TextEditor</string>
+    <string name="title_activity_settings">Настройки</string>
     <string name="action_save">Сохранить</string>
     <string name="action_open">Открыть</string>
     <string name="action_save_as">Сохранить как</string>
@@ -51,6 +50,8 @@
     <string name="pref_first_litera">Заглавная буква</string>
     <string name="pref_first_litera_summary">Делать первую букву предложения заглавной</string>
     <string name="pref_numeration">Нумерация строк</string>
+    <string name="pref_start_numeration">Начало нумерации</string>
+    <string name="pref_start_numeration_summary">Начать нумерацию с 0</string>
     <string name="pref_language">Язык</string>
     <string name="pref_highlighting">Подсветка</string>
     <string name="pref_highlighting_summ">Подсвечивать текущую строку</string>
@@ -75,6 +76,7 @@
 
     <string name="default_file_name">Придумай мне имя</string>
     <string name="unnamed_file">безымянный</string>
+    <string name="dlg_choose_file_name">Как файл назовём?</string>
     <string name="dlg_save_changes">Сохранить изменения?</string>
     <string name="dlg_positive">Таки да</string>
     <string name="dlg_negative">Нет</string>

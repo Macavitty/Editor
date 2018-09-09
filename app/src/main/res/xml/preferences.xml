@@ -1,56 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory android:title="General">
+        <CheckBoxPreference
+            android:key="@string/pref_first_litera"
+            android:summary="@string/pref_first_litera_summary"
+            android:title="@string/pref_first_litera" />
+        <CheckBoxPreference
+            android:key="@string/pref_highlighting"
+            android:singleLineTitle="false"
+            android:summary="@string/pref_highlighting_summ"
+            android:title="@string/pref_highlighting" />
 
-    <CheckBoxPreference
-        android:key="@string/pref_first_litera"
-        android:summary="@string/pref_first_litera_summary"
-        android:title="@string/pref_first_litera" />
+        <CheckBoxPreference
+            android:key="@string/pref_numeration"
+            android:summary=""
+            android:title="@string/pref_numeration" />
 
-    <CheckBoxPreference
-        android:summary=""
-        android:key="@string/pref_numeration"
-        android:title="@string/pref_numeration" />
+        <CheckBoxPreference
+            android:key="@string/pref_start_numeration"
+            android:title="@string/pref_start_numeration"
+            android:summary="@string/pref_start_numeration_summary"
+            android:enabled="false"/>
+    </PreferenceCategory>
 
-    <CheckBoxPreference
-        android:summary="@string/pref_highlighting_summ"
-        android:key="@string/pref_highlighting"
-        android:title="@string/pref_highlighting"
-        android:singleLineTitle="false"/>
+    <PreferenceCategory android:title="Font">
+        <EditTextPreference
+            android:defaultValue="20"
+            android:dialogTitle="@string/pref_size_hint"
+            android:inputType="numberDecimal"
+            android:key="@string/pref_size"
+            android:title="@string/pref_size" />
 
-    <EditTextPreference
-        android:defaultValue="20"
-        android:dialogTitle="@string/pref_size_hint"
-        android:inputType="numberDecimal"
-        android:key="@string/pref_size"
-        android:title="@string/pref_size" />
+        <ListPreference
+            android:defaultValue="1"
+            android:entries="@array/text_srift"
+            android:entryValues="@array/text_srift"
+            android:key="@string/pref_srift"
+            android:title="@string/pref_srift" />
 
-    <ListPreference
-        android:defaultValue="1"
-        android:entries="@array/text_srift"
-        android:entryValues="@array/text_srift"
-        android:key="@string/pref_srift"
-        android:title="@string/pref_srift" />
+        <ListPreference
+            android:defaultValue="1"
+            android:entries="@array/text_style"
+            android:entryValues="@array/text_style"
+            android:key="@string/pref_style"
+            android:title="@string/pref_style" />
+    </PreferenceCategory>
+    <PreferenceCategory android:title="Color">
+        <ListPreference
+            android:defaultValue="1"
+            android:entries="@array/text_color"
+            android:entryValues="@array/text_color"
+            android:key="@string/pref_text_color"
+            android:title="@string/pref_text_color" />
 
-    <ListPreference
-        android:defaultValue="1"
-        android:entries="@array/text_style"
-        android:entryValues="@array/text_style"
-        android:key="@string/pref_style"
-        android:title="@string/pref_style" />
-
-    <ListPreference
-        android:defaultValue="1"
-        android:entries="@array/text_color"
-        android:entryValues="@array/text_color"
-        android:key="@string/pref_text_color"
-        android:title="@string/pref_text_color" />
-
-    <ListPreference
-        android:defaultValue="1"
-        android:entries="@array/back_color"
-        android:entryValues="@array/back_color"
-        android:key="@string/pref_back_color"
-        android:title="@string/pref_back_color" />
+        <ListPreference
+            android:defaultValue="1"
+            android:entries="@array/back_color"
+            android:entryValues="@array/back_color"
+            android:key="@string/pref_back_color"
+            android:title="@string/pref_back_color" />
+    </PreferenceCategory>
 
 
 </PreferenceScreen>

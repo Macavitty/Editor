@@ -12,38 +12,39 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Preload">
-
         <activity
             android:name=".MainActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize">
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
+
             </intent-filter>
         </activity>
-
         <activity
             android:name=".SettingsActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
-            android:label="@string/app_name">
+            android:label="@string/title_activity_settings"
+            android:parentActivityName=".MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.tania.editor.MainActivity"/>
 
         </activity>
-
         <activity
             android:name=".OpenFileActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="@string/app_name">
 
         </activity>
-
         <activity
             android:name=".SaveAsActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="@string/app_name">
 
         </activity>
-
     </application>
 
 </manifest>

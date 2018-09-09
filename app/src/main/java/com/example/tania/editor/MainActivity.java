@@ -11,11 +11,11 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -27,11 +27,11 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.util.ArrayDeque;
-import java.util.Arrays;
 import java.util.Deque;
 
 
 public class MainActivity extends AppCompatActivity {
+
 
     private TabLayout tabLayout;
     private EditText editText;
@@ -64,6 +64,8 @@ public class MainActivity extends AppCompatActivity {
     static boolean isSavingCanceled = false;
     static boolean isOpeningCanceled = false;
 
+    SharedPreferences preferences;
+
     //    int permissionWriteStatus = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
 //    int permissionReadStatus = ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE);
     private static final int PERMISSION_REQUEST_CODE = 123;
@@ -79,6 +81,7 @@ public class MainActivity extends AppCompatActivity {
         rootFragment = (RootMatEgoFragment) this.getSupportFragmentManager().findFragmentById(R.id.boss_fragment);
         refreshPagerAdapter();
         tabLayout = findViewById(R.id.sliding_tabs);
+        preferences = PreferenceManager.getDefaultSharedPreferences(this);
 
         rootFragment.addTab(DEFAULT_PAGE_NAME);
 
@@ -128,7 +131,6 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-
     }
 
     @Override
@@ -223,22 +225,22 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+
+
     @Override
     public void onResume() {
 
         super.onResume();
 
-        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
-
         // After SettingsActivity  //
 
-        textSize = Float.parseFloat(sp.getString(getString(R.string.pref_size), "20"));
+        textSize = Float.parseFloat(preferences.getString(getString(R.string.pref_size), "20"));
         if (textSize < 10) textSize = 10;
         else if (textSize > 600) textSize = 600;
 
-        String type = sp.getString(getString(R.string.pref_style), "");
-        String srift = sp.getString(getString(R.string.pref_srift), "");
-        //if (sp.getBoolean(getString(R.string.pref_style_regular),false)) typeface += Typeface.NORMAL;
+        String type = preferences.getString(getString(R.string.pref_style), "");
+        String srift = preferences.getString(getString(R.string.pref_srift), "");
+        //if (preferences.getBoolean(getString(R.string.pref_style_regular),false)) typeface += Typeface.NORMAL;
         if (type.contains(getString(R.string.pref_style_bold))) typefaceStyle += Typeface.BOLD;
         if (type.contains(getString(R.string.pref_style_italic)) || type.contains(getString(R.string.italic_low_case)))
             typefaceStyle += Typeface.ITALIC;
@@ -246,7 +248,7 @@ public class MainActivity extends AppCompatActivity {
             typefaceFont = Typeface.MONOSPACE;
         if (srift.contains(getString(R.string.pref_style_serif))) typefaceFont = Typeface.SERIF;
 
-        String tcolor = sp.getString(getString(R.string.pref_text_color), "");
+        String tcolor = preferences.getString(getString(R.string.pref_text_color), "");
         if (tcolor.contains(getString(R.string.pref_color_black))) textColor = Color.BLACK;
         if (tcolor.contains(getString(R.string.pref_color_red))) textColor = Color.RED;
         if (tcolor.contains(getString(R.string.pref_color_white))) textColor = Color.WHITE;
@@ -257,7 +259,7 @@ public class MainActivity extends AppCompatActivity {
             textColor = ContextCompat.getColor(this, R.color.myYellow);
         if (tcolor.contains(getString(R.string.pref_color_magenta))) textColor = Color.MAGENTA;
 
-        String color = sp.getString(getString(R.string.pref_back_color), "");
+        String color = preferences.getString(getString(R.string.pref_back_color), "");
         if (color.contains(getString(R.string.pref_color_black))) backgroundColor = Color.BLACK;
         if (color.contains(getString(R.string.pref_color_white)))
             backgroundColor = Color.rgb(255, 255, 240);
@@ -287,9 +289,10 @@ public class MainActivity extends AppCompatActivity {
             backgroundColor = ContextCompat.getColor(this, R.color.myNavy);
 
         // work please
-        capLitera = sp.getBoolean(getString(R.string.pref_first_litera), false);
-        MainEditText.isNumbersNeeded = sp.getBoolean(getString(R.string.pref_numeration), false);
-        MainEditText.isHighlightingNeeded = sp.getBoolean(getString(R.string.pref_highlighting), false);
+        capLitera = preferences.getBoolean(getString(R.string.pref_first_litera), false);
+        MainEditText.isNumbersNeeded = preferences.getBoolean(getString(R.string.pref_numeration), true);
+        MainEditText.startWith0 = preferences.getBoolean(getString(R.string.pref_start_numeration), true);
+        MainEditText.isHighlightingNeeded = preferences.getBoolean(getString(R.string.pref_highlighting), false);
 
         if (openAndSaveAsActivitiesWereCalled) {
             saveAsActivityWasCalled = false; // про всяк випадок

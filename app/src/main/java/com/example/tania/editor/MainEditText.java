@@ -16,7 +16,9 @@ public class MainEditText extends android.support.v7.widget.AppCompatEditText {
     private Rect bounds = new Rect();
     public static boolean isNumbersNeeded = false;
     public static boolean isHighlightingNeeded = false;
+    public static boolean startWith0 = true;
     private int pudding = 100;
+    private int start = 1;
 
     public MainEditText(Context context, AttributeSet attributeSet) {
         super(context, attributeSet);
@@ -30,10 +32,12 @@ public class MainEditText extends android.support.v7.widget.AppCompatEditText {
          */
         if (isNumbersNeeded) {
             int baseLine = getBaseline();
+            start = startWith0 ? 0 : 1;
             paintNumbers.setTextSize(MainActivity.textSize - 2);
             paintNumbers.setColor(getResources().getColor(R.color.numeration));
             for (int i = 0; i < getLineCount(); i++) {
-                canvas.drawText(i + "", 5, baseLine, paintNumbers);
+                int n = i + (startWith0 ? 0 : 1);
+                canvas.drawText(n + "", 5, baseLine, paintNumbers);
                 baseLine += getLineHeight();
             }
             if (getLineCount() < 10) {
